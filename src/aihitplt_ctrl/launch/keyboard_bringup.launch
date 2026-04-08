@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find aihitplt_bringup)/launch/bringup.launch"/>
+    <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
+    <node pkg="aihitplt_ctrl" type="turtlebot_teleop_key.py" name="turtlebot_teleop_keyboard"  output="screen">
+        <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/cmd_vel"/>
+    </node>
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="aihitplt_hardware_test" type="multi_ai_sensor_node.py" name="multi_ai_sensor_node" output="screen" />
+  
+  <node pkg="aihitplt_hardware_test" type="multi_ai_control_node.py" name="multi_ai_control_node" />
+
+</launch>

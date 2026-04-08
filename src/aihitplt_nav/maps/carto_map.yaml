@@ -1,0 +1,7 @@
+image: /home/aihit/aihitplt_ws/src/aihitplt_nav/maps/carto_map.pgm
+resolution: 0.050000
+origin: [-8.518649, -5.866127, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

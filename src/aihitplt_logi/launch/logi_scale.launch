@@ -1,0 +1,12 @@
+<launch>
+    <!-- LogiScale传感器节点 -->
+    <node name="logi_scale_node" pkg="aihitplt_logi" type="logi_scale_node.py" output="screen">
+        <!-- 串口配置 -->
+        <!--param name="serial_port" value="/dev/ttyUSB1" /--> 
+        <param name="baudrate" value="115200" />
+        <param name="timeout" value="0.1" />
+        <param name="publish_raw_data" value="true" />
+        <!-- 控制指令话题 -->
+        <param name="cmd_topic" value="/logi_scale/control" />
+    </node>
+</launch>

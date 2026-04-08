@@ -1,0 +1,26 @@
+{
+  "map_name": "test",
+  "map_property": {
+    "support_controllers": [
+      "FollowPath",
+      "Backward",
+      "MPPI"
+    ]
+  },
+  "points": [
+    {
+      "name": "目标点_2139",
+      "x": 2.1232900391236886,
+      "y": 2.139408521637133,
+      "theta": 0.0,
+      "type": "NavGoal"
+    },
+    {
+      "name": "目标点_ecdb",
+      "x": 0.429868248962357,
+      "y": 0.8128947860107565,
+      "theta": 0.0,
+      "type": "NavGoal"
+    }
+  ]
+}

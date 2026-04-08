@@ -1,0 +1,73 @@
+<launch>
+  <!--打开节点aihitplt_bringup，初始化串口等操作-->
+  <arg name="smoother"  default="false"/> <!-- 是否开启速度平滑功能 -->
+  <arg name="odom_frame_id"  default="odom_combined"/> <!-- 设置里程计话题起点TF坐标 -->
+  <arg name="Ultrasonic_Avoid" default="false"/><!-- 是否开启超声波避障功能 -->
+  <arg name="is_cartographer" default="false"/><!--是否为cartographer建图-->
+  <arg name="activate_pan_tilt_sensor" default="false"/><!--是否启动AI多功能模块云台与环境传感器-->
+  <arg name="rviz_control" default="false" /><!--是否打开rviz进行控制-->
+  
+  <!--电池容量 -->
+  <param name="robot_BatteryCapacity" value="20000"/>
+  
+  <!-- 是否开启底盘自检功能，可在终端输出底盘相关的警告和报错 -->
+  <arg name="self_check"  default="true"/>
+
+  <!-- 超声波开启避障距离设定 -->
+  <arg name="start_avoid_Front"     default="0.3"/><!-- 超声波正前方避障距离 单位是m-->
+  <arg name="start_avoid_LR"   default="0.3"/><!-- 超声波  侧方避障距离 单位是m-->
+ 
+  <node pkg="aihitplt_bringup" type="aihitplt_robot_node" name="aihitplt_robot" output="screen" respawn="false">
+    <param name="usart_port_name"    type="string" value="/dev/aihitplt_controller"/>  
+    <param name="serial_baud_rate"   type="int"    value="115200"/>
+    <param name="odom_frame_id"      type="string" value="$(arg odom_frame_id)"/> 
+    <param name="robot_frame_id"     type="string" value="base_footprint"/> 
+    <param name="gyro_frame_id"      type="string" value="gyro_link"/>
+
+    <!-- 里程计修正参数，对来自运动底盘的速度信息进行手动修正 -->
+    <param name="odom_x_scale"      type="double" value="1.0"/> 
+    <param name="odom_y_scale"      type="double" value="1.0"/> 
+    <param name="odom_z_scale_positive"      type="double" value="1.0"/> 
+    <param name="odom_z_scale_negative"      type="double" value="1.0"/> 
+
+    <!-- 如果开启了超声波避障功能，则订阅超声波避障速度 -->
+    <remap if="$(arg Ultrasonic_Avoid)" from="cmd_vel" to="change_cmd_vel"/>
+    <!-- 如果开启了平滑功能，则订阅平滑速度 -->
+    <remap if="$(arg smoother)" from="cmd_vel" to="smoother_cmd_vel"/>
+
+  </node>
+
+  <!-- 如果开启了速度平滑功能，则运行速度平滑功能包 -->
+  <include if="$(arg smoother)" 
+    file="$(find aihitplt_bringup)/launch/include/velocity_smoother.launch" >
+  </include>
+  
+  <!-- 如果开启了超声波避障功能，则运行避障功能包 -->
+  <node if="$(arg Ultrasonic_Avoid)" pkg="aihitplt_bringup" type="supersonic_avoid.py" output="screen" name="avoid">
+    <param name="start_avoid_Front"  value="$(arg start_avoid_Front)"/>
+    <param name="start_avoid_LR" value="$(arg start_avoid_LR)"/>
+  </node>
+
+  <!-- 如果开启了底盘自检功能，可在终端输出底盘相关的警告和报错 -->
+  <node if="$(arg self_check)" pkg="aihitplt_bringup" type="self_check_node" output="screen" name="self_check">
+    <param name="display_run"  type="bool" value="false"/> 
+  </node>
+
+  <include file="$(find aihitplt_bringup)/launch/include/aihitplt_model_visualization.launch" />
+  <!-- 关闭底盘自主安全防护 -->
+  <!-- <node pkg="aihitplt_bringup" type="security_pub.py" output="screen" name="security_node"/> -->
+  <include file="$(find aihitplt_bringup)/launch/include/robot_pose_ekf.launch" >
+    <arg name="is_cartographer" value="$(arg is_cartographer)"/>
+  </include>
+  
+  <!-- arg name="model"/ -->
+  <param name="robot_description" textfile="$(find aihitplt_description)/urdf/aihitplt.urdf" />
+  
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <remap from="joint_states" to="/joint_states" />
+  </node>
+  <node pkg="aihitplt_bringup" type="aihitplt_joint_publisher.py" name="aihit_joint_state_publisher" />
+  
+
+</launch>

@@ -1,0 +1,4 @@
+<launch>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find car_astra)/rviz/depth_convert.rviz" required="true" />
+
+</launch>

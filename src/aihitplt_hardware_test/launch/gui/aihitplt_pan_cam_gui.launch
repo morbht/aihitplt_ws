@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="aihitplt_hardware_test" 
+  	type="pan_tilt_camera_gui.py" 
+  	name="pan_tilt_cam_app_node" />
+      
+</launch>

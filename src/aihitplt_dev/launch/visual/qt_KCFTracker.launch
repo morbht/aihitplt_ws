@@ -1,0 +1,9 @@
+<launch>
+    <!-- 包含现有的启动文件 -->
+    <include file="$(find aihitplt_hardware_test)/QT_dev/launch/dev/qt_bringup.launch"/>
+
+    <!-- 启动 KCF Tracker 节点 -->
+    <node name="KCF_Tracker" pkg="aihitplt_astra" type="KCFTracker_node" required="true" output="screen"/>
+
+
+</launch>

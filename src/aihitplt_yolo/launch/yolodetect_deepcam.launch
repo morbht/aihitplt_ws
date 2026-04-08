@@ -1,0 +1,10 @@
+<launch>
+    <arg name="display" default="true"/>
+    <!-- web_video_server -->
+    <!-- include file="$(find astra_camera)/launch/astrapro.launch" / -->
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server" output="screen"/>
+    <node pkg="aihitplt_yolov4_tiny" type="msgToimg.py" name="msgToimg_deepcam" required="true" output="screen"/>
+    <node pkg="aihitplt_yolov4_tiny" type="yolov4_tiny_deepcam.py" name="YoloDetect_deepcam" output="screen" required="true" args="$(arg display)"/>
+</launch>
+
+

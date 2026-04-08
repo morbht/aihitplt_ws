@@ -1,0 +1,15 @@
+<launch>
+
+    <arg name="use_rviz" default="true"/>
+
+    <arg name="map_name" default="2d_vision_map" doc="保存/加载的地图文件名（不含扩展名）"/>
+
+
+    <include file="$(find aihitplt_hardware_test)/QT_dev/launch/slam/qt_astrapro_bringup.launch"/>
+
+
+    <include file="$(find aihitplt_nav)/launch/aihitplt_navigation.launch">
+        <arg name="use_rviz" value="$(arg use_rviz)" />
+        <arg name="map_name" value="$(arg map_name)" />  <!-- 地图文件 -->
+    </include>
+</launch>

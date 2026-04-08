@@ -1,0 +1,18 @@
+<launch>
+    <arg name="use_rviz" default="true"/>
+    
+    <include file="$(find aihitplt_hardware_test)/QT_dev/launch/slam/qt_astrapro_bringup.launch"/>
+    
+    <include file="$(find aihitplt_nav)/launch/library/rtabmap.launch"/>
+    
+    <include file="$(find aihitplt_nav)/launch/view/view_rtabmap.launch" if="$(arg use_rviz)"/>
+
+    <arg name="use_keyboard" default="true" doc="是否在新终端中启动键盘控制"/>
+    <group if="$(arg use_keyboard)">
+        <!-- 直接调用现有的qt_keyboard_teleop.launch，但在新终端中 -->
+        <node name="keyboard_teleop_launcher" pkg="aihitplt_hardware_test" type="qt_keyboard_teleop.launch"
+              launch-prefix="gnome-terminal -- bash -c 'ROS_MASTER_URI=$(env ROS_MASTER_URI) roslaunch aihitplt_hardware_test qt_keyboard_teleop.launch; exec bash'"
+              respawn="false">
+        </node>
+    </group>
+</launch>

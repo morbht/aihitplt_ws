@@ -1,0 +1,23 @@
+<launch>
+    
+    <arg name="use_rviz" default="true"/>
+    <arg name="map_type" default="gmapping" doc="opt: gmapping,hector,karto,cartographer,web"/>
+    
+    <arg name="use_keyboard" default="true" doc="是否在新终端中启动键盘控制"/>
+    
+    <!-- SLAM建图部分 -->
+    <include file="$(find aihitplt_nav)/launch/aihitplt_map.launch">
+        <arg name="use_rviz" value="$(arg use_rviz)" />  
+        <arg name="map_type" value="$(arg map_type)" />
+    </include>
+    
+    <!-- 键盘控制节点：使用gnome-terminal在新窗口中启动 -->
+    <group if="$(arg use_keyboard)">
+        <!-- 直接调用现有的qt_keyboard_teleop.launch，但在新终端中 -->
+        <node name="keyboard_teleop_launcher" pkg="aihitplt_hardware_test" type="qt_keyboard_teleop.launch"
+              launch-prefix="gnome-terminal -- bash -c 'ROS_MASTER_URI=$(env ROS_MASTER_URI) roslaunch aihitplt_hardware_test qt_keyboard_teleop.launch; exec bash'"
+              respawn="false">
+        </node>
+    </group>
+    
+</launch>

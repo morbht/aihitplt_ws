@@ -1,0 +1,19 @@
+<launch>
+    <arg name="flip" default="False"/>
+    <arg name="display" default="True"/>
+    <arg name="input_image_topic" default="/usb_cam/image_raw"/>
+    
+    <include file="$(find usb_cam)/launch/usb_cam_no_display.launch"/>
+    
+    <node name="simple_AR" pkg="aihitplt_visual" type="simple_AR.py" required="true" output="screen" args="$(arg display)">
+        <param name="flip" type="bool" value="$(arg flip)"/>
+        <!-- 添加输入话题参数 -->
+        <param name="input_image_topic" type="string" value="$(arg input_image_topic)"/>
+        <!-- 重新映射输入话题 -->
+        <remap from="input_image_topic" to="$(arg input_image_topic)"/>
+        <remap from="/simpleAR/camera" to="/simpleAR/camera"/>
+    </node>
+    
+    <!-- web_video_server -->
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server" output="screen"/>
+</launch>

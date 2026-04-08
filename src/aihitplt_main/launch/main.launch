@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!-- 启动main.py节点 -->
+    <node name="main" pkg="aihitplt_main" type="main.py" output="screen" respawn="false" required="true"/>
+
+
+
+</launch>

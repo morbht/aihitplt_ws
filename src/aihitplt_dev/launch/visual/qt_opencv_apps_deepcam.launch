@@ -1,0 +1,7 @@
+<launch>
+    <arg name="img_flip" default="False"/>
+    <node name="img_transform" pkg="aihitplt_visual" type="pub_deepcam_image.py" output="screen">
+        <param name="img_flip" type="bool" value="$(arg img_flip)"/>
+    </node>
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server"/>
+</launch>

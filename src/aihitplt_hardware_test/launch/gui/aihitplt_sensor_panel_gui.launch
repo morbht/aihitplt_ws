@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="aihitplt_hardware_test" 
+  	type="sensor_panel_gui.py" 
+  	name="sensor_panel_gui_node" />
+      
+</launch>

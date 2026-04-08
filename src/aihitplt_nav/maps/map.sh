@@ -1,0 +1,1 @@
+rosrun map_server map_saver -f /home/pi/aihitplt_ws/src/aihitplt_nav/maps/map

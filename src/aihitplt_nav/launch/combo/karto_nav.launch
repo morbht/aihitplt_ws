@@ -1,0 +1,15 @@
+<launch>
+    <!-- 通用参数 -->
+    <arg name="use_rviz" default="false"/>
+    <!-- 地图相关参数 -->
+    <arg name="map_name" default="karto_map" doc="保存/加载的地图文件名（不含扩展名）"/>
+
+    <!-- 传感器和电机驱动 -->
+    <include file="$(find aihitplt_nav)/launch/laser_bringup.launch"/>
+
+    <!-- 导航栈 -->
+    <include file="$(find aihitplt_nav)/launch/aihitplt_navigation.launch">
+        <arg name="use_rviz" value="$(arg use_rviz)" />
+        <arg name="map_name" value="$(arg map_name)" />  <!-- 地图文件 -->
+    </include>
+</launch>

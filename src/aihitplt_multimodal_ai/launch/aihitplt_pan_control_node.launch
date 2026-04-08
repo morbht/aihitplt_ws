@@ -1,0 +1,5 @@
+<launch>
+    <node pkg = "aihitplt_multimodal_ai" name = "muti_ai_control_node" type = "muti_ai_control_node.py" >
+        <param name = "port" value="/dev/ttyUSB2"/>
+    </node>
+</launch>

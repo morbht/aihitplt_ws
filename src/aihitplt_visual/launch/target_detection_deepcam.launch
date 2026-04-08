@@ -1,0 +1,20 @@
+<launch>
+    <!-- 参数配置 -->
+    <arg name="flip" default="False"/>
+    <arg name="display" default="True"/>
+    <arg name="input_image_topic" default="/camera/rgb/image_raw"/>
+    
+    <include file="$(find astra_camera)/launch/astrapro.launch"/>
+    
+    <!-- 组合检测节点 -->
+    <node name="target_detection" pkg="aihitplt_visual" type="target_detection.py" required="true" output="screen">
+        <param name="flip" value="$(arg flip)"/>
+        <param name="display" value="$(arg display)"/>
+        <param name="input_image_topic" value="$(arg input_image_topic)"/>
+        <!-- 重映射输入话题 -->
+        <remap from="input_image_topic" to="$(arg input_image_topic)"/>
+    </node>
+    
+    <!-- web视频服务器（可选） -->
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server" output="screen"/>
+</launch>

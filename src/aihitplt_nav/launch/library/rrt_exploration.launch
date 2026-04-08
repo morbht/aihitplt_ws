@@ -1,0 +1,9 @@
+<launch>
+    <arg name="use_rviz" default="false"/>
+    <include file="$(find aihitplt_nav)/launch/library/gmapping.launch">
+        <arg name="scan_topic" default="scan"/>
+    </include>
+    <include file="$(find aihitplt_nav)/launch/library/move_base.launch" />
+    <include file="$(find aihitplt_nav)/launch/library/simple.launch"/>
+    <include file="$(find aihitplt_nav)/launch/view/view_rrt_map.launch" if="$(arg use_rviz)"/>
+</launch>

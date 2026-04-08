@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+
+  <group unless="$(eval optenv('USE_SAVED_PORT', '0') == '0')">
+    <rosparam command="load"
+              file="$(find aihitplt_bringup)/config/knob_port.yaml"
+              subst_value="true"/>
+  </group>
+
+  <arg name="ports"
+       default="$(optenv KNOB_PORT '')"/>
+
+  <!-- 逻辑：优先使用传入的ports参数，其次使用配置文件中的device，最后使用默认值 -->
+  <arg name="final_port"
+       value="$(eval arg('ports') 
+               if len(arg('ports')) > 0 
+               else param('device', '/dev/ttyUSB0'))"/>
+
+  <node pkg="aihitplt_bringup"
+        type="round_panel.py"
+        name="round_panel"
+        output="screen">
+    <param name="port"     value="$(arg final_port)"/>
+    <param name="baudrate" value="115200"/>
+  </node>
+</launch>

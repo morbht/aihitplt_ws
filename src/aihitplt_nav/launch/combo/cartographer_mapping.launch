@@ -1,0 +1,11 @@
+<launch>
+    <!-- 定义参数 -->
+    <arg name="use_rviz" default="false"/>
+    <arg name="map_type" default="cartographer"/>
+    <include file="$(find aihitplt_nav)/launch/laser_bringup.launch"/>
+    <include file="$(find aihitplt_ctrl)/launch/aihitplt_keyboard.launch"/>
+    <include file="$(find aihitplt_nav)/launch/aihitplt_map.launch">
+        <arg name="use_rviz" value="$(arg use_rviz)" />
+        <arg name="map_type" value="$(arg map_type)" />
+    </include>
+</launch>

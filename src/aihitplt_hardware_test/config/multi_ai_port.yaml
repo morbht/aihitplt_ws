@@ -1,0 +1,3 @@
+baudrate: 115200
+last_updated: '2026-04-02 10:25:40'
+port: /dev/ttyUSB2

@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="aihitplt_voice_system" type="aihitplt_aisound.py" name="aihitplt_tts_node" output="screen">
+    <param name="appid" value="0daad079" />
+    <param name="voice" value="测试测试"/>
+    <param name="work_dir" value="/home/aihit/aihitplt_ws/src/aihitplt_voice_system/bin/msc" />>
+    <param name="speech_param" value="voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2" />
+  </node>
+</launch>

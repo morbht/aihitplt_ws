@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg = "aihitplt_hardware_test" type = "5扬声器与麦克风测试.sh" name = "mic_test_sh" output = "screen"/>
+
+</launch>

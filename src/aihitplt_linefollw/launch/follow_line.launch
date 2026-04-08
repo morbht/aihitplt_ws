@@ -1,0 +1,11 @@
+<launch>
+    <arg name="VideoSwitch" default="true"/>
+    <arg name="img_flip" default="false"/>
+    <include file="$(find aihitplt_bringup)/launch/aihitplt_bringup.launch"/>
+    <include file="$(find astra_camera)/launch/astrapro.launch"/>
+    <node name="LineDetect" pkg="aihitplt_linefollw" type="follow_line.py" output="screen" required="true" if="$(arg VideoSwitch)">
+        <param name="img_flip" type="bool" value="$(arg img_flip)"/>
+        <param name="VideoSwitch" type="bool" value="$(arg VideoSwitch)"/>
+        <remap from="/camera/rgb/image_raw" to="/camera/rgb/image_raw"/>
+    </node>
+</launch>

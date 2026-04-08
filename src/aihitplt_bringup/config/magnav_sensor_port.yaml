@@ -1,0 +1,4 @@
+baudrate: 115200
+last_updated: '2026-04-01 15:52:53'
+port: /dev/ttyUSB2
+sensor_type: IGK-G408

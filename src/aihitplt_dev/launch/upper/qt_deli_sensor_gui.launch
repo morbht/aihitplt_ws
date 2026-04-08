@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="aihitplt_hardware_test" 
+  	type="deli_sensor_gui.py" 
+  	name="deli_sensor_gui_node" />
+      
+</launch>

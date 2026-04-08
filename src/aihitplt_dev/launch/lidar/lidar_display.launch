@@ -1,0 +1,6 @@
+<launch>
+  <arg name="path" default="$(find aihitplt_dev)/"/>
+  <include file="$(find bluesea2)/launch/bslidar.launch" />
+  
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg path)/rviz/demo.rviz" />
+</launch>

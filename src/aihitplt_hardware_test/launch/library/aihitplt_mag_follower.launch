@@ -1,0 +1,9 @@
+<launch> 
+ <node pkg="aihitplt_mag_follower" type="aihitplt_mag" name="aihitplt_mag" output="screen" >
+  <param name="Port" type="string" value="/dev/aihitplt_mag"/>
+  <param name="Baudrate" type="int" value="115200"/>
+  <param name="ID" type="int" value="1"/>
+  <param name="RequestCycle" type="double" value="1.0"/>
+  <param name="Mode" type="int" value="0"/>
+ </node>
+</launch>

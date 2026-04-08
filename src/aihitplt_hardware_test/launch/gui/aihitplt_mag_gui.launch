@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="aihitplt_hardware_test" 
+  	type="mag_gui.py" 
+  	name="mag_gui_node" />
+      
+</launch>

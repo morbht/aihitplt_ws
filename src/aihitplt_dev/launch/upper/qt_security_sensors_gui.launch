@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg = "aihitplt_hardware_test" 
+  	type = "security_sensors_gui.py" 
+  	name = "security_sensors_gui_node" 
+  	output="screen"/>
+</launch>

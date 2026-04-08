@@ -1,0 +1,47 @@
+# 日志配置
+log_config:
+  # 日志保存目录
+  log_dir: "/home/aihit/aihitplt_ws/src/aihitplt_main/scripts/security_app/log"
+  
+  # 日志记录条件
+  record_conditions:
+    # 导航相关
+    navigation:
+      start_task: true      # 开始任务时记录
+      reach_point: true     # 到达点位时记录
+      navigation_failed: true  # 导航失败时记录
+    
+    # 异常相关
+    abnormal:
+      grade_drop_to_c: true    # 等级降到C级时记录
+      emergency_mode: true      # 进入应急模式时记录
+      sensor_over_threshold: true  # 传感器超阈值时记录
+    
+    # 检测相关
+    detection:
+      detect_fire: true       # 检测到火源时记录
+      detect_smoke: true      # 检测到烟雾时记录
+      confidence_threshold: 0.7  # 置信度阈值
+    
+    # 系统状态
+    system:
+      log_interval: 0         # 定期记录间隔（秒），0表示不记录
+      record_battery: false   # 是否记录电量
+      record_position: false  # 是否记录位置
+  
+  # 日志文件管理
+  log_management:
+    auto_save: true           # 任务结束时自动保存
+    max_log_files: 20         # 最多保留多少个日志文件
+    max_log_days: 7           # 最多保留多少天的日志
+  
+  # 日志格式
+  log_format:
+    time_format: "%H:%M:%S"               # 时间格式
+    date_format: "%Y-%m-%d"               # 日期格式
+    file_name_format: "巡检日志_%Y%m%d_%H%M%S.txt"  # 文件名格式
+    
+  # 日志级别
+  log_level:
+    console: "INFO"           # 控制台日志级别
+    file: "DEBUG"             # 文件日志级别

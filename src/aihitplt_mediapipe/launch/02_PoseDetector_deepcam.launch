@@ -1,0 +1,11 @@
+<launch>
+    <arg name="input_image_topic" default="/camera/rgb/image_raw"/>
+
+    <include file="$(find astra_camera)/launch/astrapro.launch"/>
+
+    <node pkg="aihitplt_mediapipe" type="02_PoseDetector.py" name="PoseDetector" required="true" output="screen">
+        <!-- 重映射输入话题 - 正确的位置 -->
+        <remap from="/camera/rgb/image_raw" to="$(arg input_image_topic)"/>
+    </node>
+
+</launch>

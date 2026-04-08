@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="use_rviz" default="true"/>
+    <!-- MarkerArray功能节点 || MarkerArray node-->
+    <node name='send_mark' pkg="aihitplt_nav" type="send_mark.py"/>
+    
+    <include file="$(find aihitplt_hardware_test)/QT_dev/launch/slam/qt_astrapro_bringup.launch"/>
+    
+    <include file="$(find aihitplt_nav)/launch/library/move_base.launch"/>
+    <include file="$(find aihitplt_hardware_test)/QT_dev/launch/slam/rtabmap_nav.launch"/>
+    <include file="$(find aihitplt_nav)/launch/view/view_rtabmap_nav.launch" if="$(arg use_rviz)"/>
+</launch>

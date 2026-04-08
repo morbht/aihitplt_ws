@@ -1,0 +1,19 @@
+<launch>
+
+    <!-- 参数配置 -->
+    <arg name="port" default="/dev/ttyUSB1" />
+    <arg name="baudrate" default="115200" />
+    
+    <!-- 串口桥接节点 -->
+    <node name="aihitplt_spray_bridge" pkg="aihitplt_spray" type="aihitplt_spray_bridge.py" output="screen">
+        <param name="port" value="$(arg port)" />
+        <param name="baudrate" value="$(arg baudrate)" />
+    </node>
+    
+    <!-- 手动控制节点 -->
+    <node name="spray_controller" pkg="aihitplt_spray" type="spray_controller.py" output="screen" />
+    
+    <!-- 状态监控节点 -->
+    <node name="spray_status_monitor" pkg="rostopic" type="rostopic" args="echo /spray_status" output="screen" />
+    
+</launch>

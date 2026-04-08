@@ -1,0 +1,29 @@
+﻿#BNF+IAT 1.0 UTF-8;
+!grammar call;
+!slot <f>;
+!slot <start>;
+!slot <pick>;
+!slot <terminal>;
+
+!start <callstart>;
+
+<callstart>:[<f>]<dial>;
+
+<f>:拿|将|把|带;
+
+<dial>:<start>[<pick>][<terminal>];
+
+<start>:我!id(100)|我!id(100)|
+你!id(101)|你!id(101)|
+他!id(102)|她!id(102);
+
+<pick>:去|到|至|去到|搬到|提到|挑到|移到|拿到|送到|带到;
+
+<terminal>:前台!id(200)|
+客房!id(201)|等候室!id(202)|
+大厅!id(203)|用餐区!id(204)|
+客房101!id(205)|101客房!id(205)|101房间!id(205)|
+客房102!id(206)|102客房!id(206)|102房间!id(206)|
+厨房!id(207)|
+消杀间!id(208)|
+装配区!id(209)|仓库!id(209);

@@ -1,0 +1,8 @@
+<launch>
+
+  <node pkg = "aihitplt_hardware_test" 
+  	type = "spray_gui.py" 
+  	name = "spray_gui_node" 
+  	output="screen"/>
+
+</launch>

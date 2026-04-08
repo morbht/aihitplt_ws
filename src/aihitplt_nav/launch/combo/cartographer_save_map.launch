@@ -1,0 +1,20 @@
+<launch>
+  <!-- 参数配置 -->
+  <arg name="map_dir" default="$(find aihitplt_nav)/maps"/>
+  <arg name="map_name" default="carto_map"/>
+
+  <!-- 结束轨迹 -->
+  <node pkg="rosservice" type="rosservice" name="finish_trajectory" 
+        args="call --wait /finish_trajectory 0"/>
+
+  <!-- 保存pbstream -->
+  <node pkg="rosservice" type="rosservice" name="write_state" 
+        args="call --wait /write_state '{filename: $(arg map_dir)/$(arg map_name).pbstream}'"/>
+
+  <!-- 格式转换 -->
+  <node pkg="cartographer_ros" type="cartographer_pbstream_to_ros_map" 
+        name="pbstream_converter" output="screen">
+    <param name="pbstream_filename" value="$(arg map_dir)/$(arg map_name).pbstream"/>
+    <param name="map_filestem" value="$(arg map_dir)/$(arg map_name)"/>
+  </node>
+</launch>

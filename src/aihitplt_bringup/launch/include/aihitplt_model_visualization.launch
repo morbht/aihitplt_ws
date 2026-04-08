@@ -1,0 +1,25 @@
+<launch>
+
+  <!-- 用于rplidar_ros节点，后面同理述-->
+  <!-- node pkg="tf" type="static_transform_publisher" name="base_footprint_to_laser"  args="0.16 0.00 0.193 0 0 0  base_footprint laser 100" /--> <!--laser-->
+  <!--node pkg="tf" type="static_transform_publisher" name="base_to_laser1" args="0.3 0.235 0.19  0.785 0 0  base_footprint laser1 100" /-->
+  <!--node pkg="tf" type="static_transform_publisher" name="base_to_laser2" args="-0.3 -0.235 0.19  -2.355 0 0  base_footprint laser2 100" /--> 
+  <!-- node pkg="tf" type="static_transform_publisher" name="base_footprint_to_rangeA" args="0.25 0.109 0.103 0 0 0   base_footprint range_avoid_linkA 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_rangeB" args="0.25 -0.109 0.103 0 0 0   base_footprint range_avoid_linkB 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_rangeC" args="-0.1405 0.18265 0.103 1.571 0 0   base_footprint range_avoid_linkC 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_rangeD" args="-0.1405 -0.18265 0.103 -1.571 0 0   base_footprint range_avoid_linkD 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_rangeE" args="-0.25458 0.109 0.103 3.142 0 0   base_footprint range_avoid_linkE 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_rangeF" args="-0.25458 -0.109 0.103 3.142 0 0   base_footprint range_avoid_linkF 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_camera_link" args="0.25 0.00 0.055 0 0 0  base_footprint camera_link 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_anti_drop_sensor_link" args="0.198 0.00 0.19537 0 1.047 0  base_footprint anti_drop_sensor_link 100" / -->
+  <!--  laser_avoid -->
+  <!--node pkg="tf" type="static_transform_publisher" name="base_to_laser_avoid" args="0 0 0.05 3.14 0 0   base_footprint laser_avoid 100" /-->
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_gyro" args="0.120 0.071 0.092.75 0 0 0 base_link gyro_link 100" />
+
+  <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base" args="0.0 0 0.0 0 0 0 base_footprint base_link 100" />
+  <!-- <param  name="robot_description" command="xacro  '$(find rm_description)/urdf/ECO65/s300_pro.xacro'"/> -->
+  <!--node pkg="tf" type="static_transform_publisher" name="odom_combined_to_base_footprint" args="0 0 0 0 0 0  odom_combined base_footprint 100" /-->
+
+  </launch>

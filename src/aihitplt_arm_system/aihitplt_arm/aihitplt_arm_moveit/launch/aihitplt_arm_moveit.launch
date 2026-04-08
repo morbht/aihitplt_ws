@@ -1,0 +1,21 @@
+<launch>
+  <!-- 实际机械臂硬件接口 -->
+  <node name="aihit_moveit" 
+        pkg="aihitplt_hardware_test" 
+        type="arm_moveit.py" 
+        output="screen">
+  </node>
+
+  <!-- 启动MoveIt! with real controller -->
+  <include file="$(find aihitplt_arm_moveit)/launch/aihitArm_moveit.launch">
+    <arg name="moveit_controller_manager" value="simple" />
+    <arg name="fake_execution_type" value="vanilla" />
+    <arg name="use_gui" value="false" />
+    <arg name="use_rviz" value="true" />
+    <arg name="load_robot_description" value="true" />
+  </include>
+
+  <node name="joint_state_relay" pkg="topic_tools" type="relay"
+        args="/joint_states /joint_states" />
+        
+</launch>

@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="aihitplt_hardware_test" 
+  	type="multi_ai_gui.py" 
+  	name="multi_ai_gui_node" />
+</launch>

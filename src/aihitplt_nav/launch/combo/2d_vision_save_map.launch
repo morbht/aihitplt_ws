@@ -1,0 +1,15 @@
+<launch>
+    <!-- 参数配置 -->
+    <arg name="map_name" default="2d_vision_map" />  <!-- 默认地图名称 -->
+    <arg name="save_dir" default="$(find aihitplt_nav)/maps" />  <!-- 默认保存路径 -->
+    <arg name="map_topic" default="/map" />  <!-- 要保存的地图topic -->
+
+    <!-- 调用map_server的map_saver节点 -->
+    <node pkg="map_server" type="map_saver" name="map_saver" output="screen" args="-f $(arg save_dir)/$(arg map_name)">
+        <remap from="map" to="$(arg map_topic)"/>
+    </node>
+
+    <!-- 保存完成后打印提示信息 -->
+    <node pkg="rospy" type="rospy" name="save_notifier" output="screen"
+          args="loginfo('Map saved to: $(arg save_dir)/$(arg map_name).pgm/.yaml')" />
+</launch>

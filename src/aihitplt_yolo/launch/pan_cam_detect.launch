@@ -1,0 +1,6 @@
+<launch>
+	<include file = "$(find aihitplt_aihitplt_security)/launch/aihitplt_pan_tilt_camera.launch" />
+	
+	<node pkg = "aihitplt_yolo" type = "pan_cam_detect.py" name = "pan_cam_detect_node"/>
+	
+</launch>

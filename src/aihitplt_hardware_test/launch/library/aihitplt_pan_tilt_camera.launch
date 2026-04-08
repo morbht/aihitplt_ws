@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<launch>
+
+    <node pkg="aihitplt_security" type="aihitplt_pan_tilt_camera.py" name="aihitplt_pan_tilt_camera" output="screen"/>
+    
+</launch>

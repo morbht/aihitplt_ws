@@ -1,0 +1,15 @@
+<launch>
+    <arg name="input_image_topic" default="/usb_cam/image_raw"/>
+
+    <include file="$(find usb_cam)/launch/usb_cam_no_display.launch"/>
+
+    <node pkg="aihitplt_mediapipe" type="08_Objectron.py" name="Objectron" required="true" output="screen">
+        <param name="static_mode" value="false" />
+        <param name="max_objects" value="5" />
+        <param name="min_detection_confidence" value="0.5" />
+        <param name="min_tracking_confidence" value="0.99" />
+        <!-- 重映射输入话题 - 正确的位置 -->
+        <remap from="/camera/rgb/image_raw" to="$(arg input_image_topic)"/>
+    </node>
+
+</launch>

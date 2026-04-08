@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find aihitplt_bringup)/launch/aihitplt_bringup.launch"/>
+    <include file="$(find aihitplt_bringup)/launch/aihitplt_lidar.launch"/>
+    
+</launch>

@@ -1,0 +1,12 @@
+<launch>
+	<arg name="port" default="/dev/ttyUSB2"/>
+	
+	<node pkg = "aihitplt_multimodal_ai" type = "multi_ai_control_node.py" name = "multi_ai_control_node" >
+		<param name = "port" value = "$(arg port)" />
+	</node>
+	
+	<node pkg = "aihitplt_multimodal_ai" type = "multi_ai_sensor_node.py" name = "multi_ai_sensor_node" >
+		<param name = "port" value = "$(arg port)" />
+	</node>
+
+</launch>

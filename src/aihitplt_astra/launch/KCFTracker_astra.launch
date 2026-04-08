@@ -1,0 +1,7 @@
+<launch>
+
+    <include file="$(find aihitplt_nav)/launch/bringup/astrapro_bringup.launch"/>
+    <!-- 距离相机的范围【0.6米，8米】，否则无效-->
+    <!--Range from the camera[0.4m,8m],Otherwise invalid-->
+    <node name="KCF_Tracker" pkg="aihitplt_astra" type="KCFTracker_node" required="true" output="screen"/>
+</launch>

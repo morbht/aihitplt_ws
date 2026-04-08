@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="aihitplt_deli" type="delivery_node.py" name="delivery_node" output="screen"/>
+</launch>

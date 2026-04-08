@@ -1,0 +1,21 @@
+<launch>
+    <!-- 参数配置 -->
+    <arg name="flip" default="False"/>
+    <arg name="display" default="True"/>
+    <arg name="input_image_topic" default="/camera/rgb/image_raw"/>
+    <arg name="font_path" default="$(find aihitplt_visual)/font/Block_Simplified.TTF"/>
+    
+    <!-- QR码检测节点 -->
+    <node name="QRcode_Parsing" pkg="aihitplt_visual" type="QRcode_Parsing.py" required="true" output="screen">
+        <param name="flip" value="$(arg flip)"/>
+        <param name="display" value="$(arg display)"/>
+        <param name="input_image_topic" value="$(arg input_image_topic)"/>
+        <param name="font_path" value="$(arg font_path)"/>
+        <!-- 重映射输入话题 -->
+        <remap from="input_image_topic" to="$(arg input_image_topic)"/>
+    </node>
+
+
+    <!-- web_video_server -->
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server" output="screen"/>
+</launch>

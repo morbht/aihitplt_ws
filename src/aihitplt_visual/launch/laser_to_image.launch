@@ -1,0 +1,17 @@
+<launch>
+    <!-- 参数：是否显示图像 -->
+    <arg name="display_image" default="true"/>
+        <!-- 参数：是否启用 web_video_server -->
+    <arg name="use_web" default="false"/>
+
+    <include file="$(find bluesea2)/launch/bslidar.launch"/>
+    <node name="laser_to_image" pkg="aihitplt_visual" type="laser_to_image.py" output="screen">
+        <param name="display_image" value="$(arg display_image)" />
+    </node>
+
+    <!-- 条件启动 web_video_server -->
+    <group if="$(arg use_web)">
+        <node pkg="web_video_server" type="web_video_server" name="web_video_server"/>
+    </group>
+
+</launch>

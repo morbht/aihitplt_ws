@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+# wifi_setup.exp
+
+# 设置超时时间
+set timeout 30
+
+# 获取密码参数
+set password [lindex $argv 0]
+
+# 执行需要sudo的命令
+spawn sudo /home/aihit/aihitplt_ws/src/aihitplt_hardware_test/sh/0修改热点WiFi名字的序号.sh
+
+# 等待密码提示
+expect "password" 
+# 发送密码
+send "$password\r"
+
+# 等待命令完成
+expect eof

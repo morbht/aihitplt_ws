@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="aihitplt_hardware_test" 
+  	type="mic_gui.py" 
+  	name="mic_gui_node" />
+      
+</launch>

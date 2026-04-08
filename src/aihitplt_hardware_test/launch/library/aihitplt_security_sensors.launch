@@ -1,0 +1,9 @@
+<launch>
+    <node name="security_sensors_node" 
+          pkg="aihitplt_hardware_test" 
+          type="security_sensors_node.py" />
+    <node name="security_sensors" 
+          pkg="aihitplt_hardware_test" 
+          type="security_sensors.py" 
+          output="screen"/>
+</launch>

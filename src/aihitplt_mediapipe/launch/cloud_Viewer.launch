@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="aihitplt_mediapipe" type="mediapipe_point" name="mediapipe_Viewer" required="true" output="screen"/>
+</launch>

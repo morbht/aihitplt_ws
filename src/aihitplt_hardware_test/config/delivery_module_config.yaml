@@ -1,0 +1,9 @@
+baudrate: 115200
+last_saved: '2026-04-04 17:18:23'
+lower_cal_distance: 220.0
+lower_init_distance: 220.0
+lower_move_distance: 10.0
+serial_port: /dev/ttyUSB1
+upper_cal_distance: 220.0
+upper_init_distance: 220.0
+upper_move_distance: 10.0

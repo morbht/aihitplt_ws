@@ -1,0 +1,10 @@
+<launch>
+    <arg name="VideoSwitch" default="true"/>
+    <arg name="img_flip" default="false"/>
+    <include file="$(find aihitplt_hardware_test)/QT_dev/launch/dev/qt_bringup.launch"/>
+    <node name="LineDetect" pkg="aihitplt_linefollw" type="follow_line.py" output="screen" required="true" if="$(arg VideoSwitch)">
+        <param name="img_flip" type="bool" value="$(arg img_flip)"/>
+        <param name="VideoSwitch" type="bool" value="$(arg VideoSwitch)"/>
+        <remap from="/camera/rgb/image_raw" to="/camera/rgb/image_raw"/>
+    </node>
+</launch>

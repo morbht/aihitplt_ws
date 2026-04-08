@@ -1,0 +1,50 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义渐变和滤镜（科技感核心） -->
+  <defs>
+    <!-- 蓝紫渐变背景 -->
+    <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F52BA"/>
+      <stop offset="50%" stop-color="#1E88E5"/>
+      <stop offset="100%" stop-color="#64B5F6"/>
+    </linearGradient>
+    <!-- 霓虹发光效果 -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <!-- 金属质感渐变 -->
+    <linearGradient id="metalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5F5F5"/>
+      <stop offset="50%" stop-color="#E0E0E0"/>
+      <stop offset="100%" stop-color="#BDBDBD"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 主背景（圆角科技面板） -->
+  <rect x="8" y="8" width="112" height="112" rx="24" ry="24" fill="url(#techGradient)"/>
+  <rect x="12" y="12" width="104" height="104" rx="20" ry="20" fill="#0A2463" opacity="0.6"/>
+  
+  <!-- 网格底纹（科技面板细节） -->
+  <path d="M20,20 L108,20 M20,32 L108,32 M20,44 L108,44 M20,56 L108,56 M20,68 L108,68 M20,80 L108,80 M20,92 L108,92 M20,104 L108,104
+           M20,20 L20,104 M32,20 L32,104 M44,20 L44,104 M56,20 L56,104 M68,20 L68,104 M80,20 L80,104 M92,20 L92,104 M108,20 L108,104" 
+        stroke="#1E88E5" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- AGV主体（科技化造型） -->
+  <g transform="translate(64, 76)">
+    <!-- AGV车身 -->
+    <rect x="-30" y="-15" width="60" height="30" rx="8" ry="8" fill="url(#metalGradient)" filter="url(#neonGlow)"/>
+    <!-- AGV顶部传感器舱 -->
+    <rect x="-20" y="-25" width="40" height="10" rx="4" ry="4" fill="#2196F3" filter="url(#neonGlow)"/>
+    <!-- AGV车轮（带发光效果） -->
+    <circle cx="-20" cy="15" r="8" fill="#333" stroke="#2196F3" stroke-width="1.5" filter="url(#neonGlow)"/>
+    <circle cx="20" cy="15" r="8" fill="#333" stroke="#2196F3" stroke-width="1.5" filter="url(#neonGlow)"/>
+    <!-- 车轮发光内圈 -->
+    <circle cx="-20" cy="15" r="3" fill="#64B5F6"/>
+    <circle cx="20" cy="15" r="3" fill="#64B5F6"/>
+  </g>
+
+</svg>
+

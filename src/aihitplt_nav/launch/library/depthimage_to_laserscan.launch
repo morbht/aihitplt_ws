@@ -1,0 +1,12 @@
+<launch>
+    <arg name="scan_topic" default="scan"/>
+    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" output="screen">
+        <remap from="image" to="/camera/depth/image_raw"/>
+        <remap from="camera_info" to="/camera/depth/camera_info"/>
+        <param name="scan" value="$(arg scan_topic)"/>
+        <param name="output_frame_id" value="camera_depth_frame"/>
+    </node>
+    <!-- Coordinate conversion -->
+    <node pkg="tf" type="static_transform_publisher" name="camera_link_to_laser"
+          args="0 0 0 0 0 0  /camera_link /laser 50"/>
+</launch>

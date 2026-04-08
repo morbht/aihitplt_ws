@@ -1,0 +1,9 @@
+<launch>
+    <!-- 启动激光雷达节点-->
+    <!-- Activate the lidar node -->
+    <include file="$(find aihitplt_bringup)/launch/aihitplt_lidar.launch"/>
+    <!-- 启动小车底盘驱动节点-->
+    <!-- Start the car chassis drive node -->
+    <include file="$(find aihitplt_bringup)/launch/aihitplt_bringup.launch"/>
+
+</launch>

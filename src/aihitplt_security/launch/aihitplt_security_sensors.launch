@@ -1,0 +1,7 @@
+<launch>
+    <node name="security_sensors_node" pkg="aihitplt_security" type="security_sensors_node.py">
+        <param name="port" value="/dev/ttyUSB1"/>
+    </node>
+     
+    <node name="security_sensors" pkg="aihitplt_security" type="security_sensors.py" output="screen"/>
+</launch>

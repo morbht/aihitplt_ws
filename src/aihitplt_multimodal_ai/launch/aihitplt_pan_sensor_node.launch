@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="aihitplt_multimodal_ai" type="muti_ai_sensor_node.py" name="muti_ai_sensor_node" output="screen">
+        <param name="port" value="/dev/ttyUSB2"/>
+  </node>
+
+</launch>

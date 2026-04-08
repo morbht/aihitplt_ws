@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find aihitplt_nav)/rviz/aihitplt_map.rviz"/>
+</launch>

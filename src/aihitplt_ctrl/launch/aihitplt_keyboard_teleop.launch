@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="aihitplt_ctrl" type="aihitplt_keyboard.py" name="aihitplt_keyboard"  output="screen">
+    <remap from="aihitplt_teleop/cmd_vel" to="/cmd_vel"/>
+  </node>
+</launch>

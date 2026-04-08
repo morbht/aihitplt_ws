@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="aihitplt_hardware_test" type="round_panel.py" name="round_panel_node" output="screen"/>
+</launch>

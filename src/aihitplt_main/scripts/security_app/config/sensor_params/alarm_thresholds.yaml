@@ -1,0 +1,97 @@
+# 传感器阈值配置
+sensors:
+  # 气体类传感器
+  eCO2:
+    warning: 1000      # 警戒值
+    alarm: 1500        # 报警值
+    unit: "ppm"
+    name: "CO₂浓度"
+    
+  eCH2O:
+    warning: 0.08
+    alarm: 0.10
+    unit: "mg/m³"
+    name: "甲醛浓度"
+    
+  TVOC:
+    warning: 0.6
+    alarm: 1.0
+    unit: "mg/m³"
+    name: "TVOC浓度"
+  
+  # 颗粒物
+  PM25:
+    warning: 150
+    alarm: 250
+    unit: "μg/m³"
+    name: "PM2.5"
+    
+  PM10:
+    warning: 70
+    alarm: 150
+    unit: "μg/m³"
+    name: "PM10"
+  
+  # 酒精/烟雾
+  alcohol:
+    warning: 2250
+    alarm: 3000
+    unit: ""
+    name: "酒精传感器"
+    
+  smoke:
+    warning: 1200
+    alarm: 1600
+    unit: ""
+    name: "烟雾传感器"
+  
+  # 环境参数
+  temperature:
+    warning_min: 18
+    warning_max: 28
+    alarm_min: 10
+    alarm_max: 32
+    unit: "°C"
+    name: "温度"
+    
+  humidity:
+    warning_min: 45
+    warning_max: 65
+    alarm_min: 40
+    alarm_max: 70
+    unit: "%"
+    name: "湿度"
+    
+  # 声音和光照
+  sound:
+    warning: 1000
+    alarm: 2000
+    unit: ""
+    name: "声音强度"
+    
+  light:
+     warning: 100    
+     alarm: 50      
+     unit: ""
+     name: "光照强度"
+     reverse: true   # 反转标记，数值越小强度越高
+
+# 综合评分扣分权重配置
+scoring:
+  weights:
+    eCO2: 20
+    eCH2O: 20
+    TVOC: 30
+    PM25: 20
+    PM10: 20
+    alcohol: 15
+    smoke: 30
+    temperature: 10
+    humidity: 10
+    sound: 8
+    light: 5
+    
+  grade_thresholds:
+    A: 80    # 80分以上为A级
+    B: 60    # 60-79分为B级
+    C: 0     # 60分以下为C级

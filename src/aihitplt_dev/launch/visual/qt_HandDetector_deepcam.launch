@@ -1,0 +1,9 @@
+<launch>
+    <arg name="input_image_topic" default="/camera/rgb/image_raw"/>
+
+    <node pkg="aihitplt_mediapipe" type="01_HandDetector.py" name="handDetector" required="true" output="screen">
+        <!-- 重映射输入话题 -->
+        <remap from="/camera/rgb/image_raw" to="$(arg input_image_topic)"/>
+    </node>
+ 
+</launch>

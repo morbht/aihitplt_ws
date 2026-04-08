@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- 机械臂测试界面启动launch文件 -->
+    <node name="arm_tester_app" 
+          pkg="aihitplt_arm" 
+          type="ARMTesterApp.py" 
+          output="screen"
+          respawn="false"
+          required="true">
+    </node>
+</launch>

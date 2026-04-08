@@ -1,0 +1,6 @@
+<launch>
+
+    <node name="guide_delivery_emergency_button" pkg="aihitplt_hardware_test" type="guide_deli_estop.py" output="screen" respawn="true" required="false">
+    </node>
+
+</launch>

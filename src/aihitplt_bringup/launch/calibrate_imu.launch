@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find aihitplt_bringup)/launch/aihitplt_bringup.launch" />
+    
+    <node pkg= "imu_calib" type="do_calib" name="do_calib" />
+    
+</launch>

@@ -1,0 +1,8 @@
+<launch>
+
+    <arg name="port" default="/dev/ttyUSB1" />
+
+    <node name="E_stop_node" pkg="aihitplt_hardware_test" type="guide_deli_estop.py" output="screen" respawn="true" required="false">
+    </node>
+
+</launch>

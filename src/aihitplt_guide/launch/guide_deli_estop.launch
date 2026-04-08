@@ -1,0 +1,8 @@
+<launch>
+
+    <arg name="port" default="/dev/ttyUSB2" />
+
+    <node name="guide_delivery_emergency_button" pkg="aihitplt_guide" type="guide_deli_estop.py" output="screen" respawn="true" required="false">
+    </node>
+
+</launch>

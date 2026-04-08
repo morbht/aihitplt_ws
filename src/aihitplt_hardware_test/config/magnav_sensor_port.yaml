@@ -1,0 +1,4 @@
+baudrate: 115200
+last_updated: '2026-04-01 15:53:13'
+port: /dev/aihitplt_mag
+sensor_type: IGK-G408

@@ -1,0 +1,13 @@
+<launch>
+    <arg name="use_rviz" default="true"/>
+    <arg name="map_type" default="gmapping" doc="opt: gmapping,hector,karto,cartographer"/>
+
+    <include file="$(find aihitplt_nav)/launch/library/$(arg map_type).launch"/>
+
+    <group if="$(arg use_rviz)">
+        <include if="$(eval arg('map_type') != 'cartographer')"
+                 file="$(find aihitplt_nav)/launch/view/view_map.launch"/>
+        <include if="$(eval arg('map_type') == 'cartographer')"
+                 file="$(find aihitplt_nav)/launch/view/view_cartographer.launch"/>
+    </group>
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+    <include file="$(find aihitplt_bringup)/launch/bringup.launch"/>
+    <include file="$(find aihitplt_ctrl)/launch/yahboom_keyboard.launch"/>
+    <include file="$(find aihitplt_nav)/launch/aihitplt_map.launch"/>
+
+</launch>

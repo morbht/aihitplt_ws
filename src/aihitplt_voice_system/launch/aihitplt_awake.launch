@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<launch>
+    <!--运行科大讯飞在线语音识别功能包-->
+    <node pkg = "aihitplt_voice_system" type = "aihitplt_awake_node" name = "aihitplt_awake_node">
+        <param name="lgi_param" value="appid = 4a1124f1,work_dir = ." />
+        <param name="response" value="wozai.wav"/>
+    </node>
+</launch>

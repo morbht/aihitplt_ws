@@ -1,0 +1,4 @@
+<launch>
+	<node pkg = "aihitplt_hardware_test" type = "microphone_test.py" name = "microphone_test_node" output = "screen" />
+</launch>
+

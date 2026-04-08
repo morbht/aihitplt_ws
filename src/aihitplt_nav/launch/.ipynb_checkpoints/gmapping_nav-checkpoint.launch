@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+    <include file="$(find aihitplt_bringup)/launch/bringup.launch"/>
+    <include file="$(find aihitplt_nav)/launch/aihitplt_navigation.launch"/>
+    <include file="$(find astra_camera)/launch/astrapro.launch"/>
+
+</launch>

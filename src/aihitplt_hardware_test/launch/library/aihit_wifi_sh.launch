@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg = "aihitplt_hardware_test" type = "0修改热点WiFi名字的序号.sh" name = "wifi_sh" output = "screen" launch-prefix="sudo -S"/>
+
+</launch>

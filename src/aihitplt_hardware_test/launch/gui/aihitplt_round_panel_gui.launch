@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg = "aihitplt_hardware_test" 
+  	type = "round_panel_gui.py" 
+  	name = "round_panel_gui_node" />
+
+</launch>

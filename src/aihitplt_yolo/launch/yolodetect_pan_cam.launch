@@ -1,0 +1,10 @@
+<launch>
+    <arg name="display" default="true"/>
+    <!-- web_video_server -->
+
+    <node pkg="web_video_server" type="web_video_server" name="web_video_server" output="screen"/>
+    <node pkg="aihitplt_yolov4_tiny" type="msgToimg_pan_cam.py" name="msgToimg_pan_cam" required="true" output="screen"/>
+    <node pkg="aihitplt_yolov4_tiny" type="yolov4_pan_cam.py" name="YoloDetect_pan_cam" output="screen" required="true" args="$(arg display)"/>
+</launch>
+
+

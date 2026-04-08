@@ -1,0 +1,25 @@
+<launch>
+    
+    <arg name="use_rviz" default="true"/>
+    
+    <arg name="map_type" default="gmapping" doc="opt: gmapping,hector,karto,cartographer,web"/>
+
+    <arg name="use_keyboard" default="true" doc="是否在新终端中启动键盘控制"/>
+    
+    <include file="$(find aihitplt_dev)/launch/dev/qt_bringup.launch">
+    	<arg name = "lidar" default="true"/>
+    </include>
+    	
+    <include file="$(find aihitplt_nav)/launch/aihitplt_map.launch">
+        <arg name="use_rviz" value="$(arg use_rviz)" />  
+        <arg name="map_type" value="$(arg map_type)" />
+    </include>
+    
+    <group if="$(arg use_keyboard)">
+        <!-- 直接调用现有的qt_keyboard_teleop.launch，但在新终端中 -->
+        <node name="keyboard_teleop_launcher" pkg="aihitplt_dev" type="qt_keyboard_teleop.launch"
+              launch-prefix="gnome-terminal -- bash -c 'ROS_MASTER_URI=$(env ROS_MASTER_URI) roslaunch aihitplt_dev qt_keyboard_teleop.launch; exec bash'"
+              respawn="false">
+        </node>
+    </group>
+</launch>

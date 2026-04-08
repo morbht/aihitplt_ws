@@ -1,0 +1,8 @@
+<launch>
+    <arg name="VideoSwitch" default="false"/>
+    <include file="$(find astra_camera)/launch/astrapro.launch"/>
+    <include file="$(find car_astra)/launch/colorHSV.launch"/>
+    <node pkg="car_astra" type="colorTracker_astra.py" name="colorTracker" required="true" output="screen"/>
+    <node pkg="car_astra" type="colorHSV.py" name="colorHSV" required="true" output="screen" if="$(arg VideoSwitch)">
+    </node>
+</launch>

@@ -1,0 +1,75 @@
+
+# 编译生成的文件
+
+build/
+
+devel/
+
+*.pyc
+
+*.pyo
+
+*.so
+
+
+
+# IDE 配置（可选，如果想保留可以删除下面两行）
+
+.vscode/
+
+.idea/
+
+
+
+# 日志文件
+
+*.log
+
+
+
+
+# ROS 编译生成的文件
+
+devel/
+
+build/
+
+install/
+
+*.pyc
+
+*.pyo
+
+*.so
+
+
+
+# CMake 生成的文件
+
+CMakeCache.txt
+
+CMakeFiles/
+
+Makefile
+
+cmake_install.cmake
+
+
+
+# 日志和临时文件
+
+*.log
+
+*.swp
+
+*.swo
+
+
+
+# IDE 配置（如果需要保留团队配置，可以删除下面两行）
+
+.vscode/
+
+.idea/
+
+.vscode/

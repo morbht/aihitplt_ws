@@ -1,0 +1,1138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="aihitplt_description">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0023744165052893 -0.000719245646635121 0.0776360386924418"
+        rpy="0 0 0" />
+      <mass
+        value="5.27952238409757" />
+      <inertia
+        ixx="0.0252589999982715"
+        ixy="-4.00780357406341E-06"
+        ixz="0.000212888528135046"
+        iyy="0.0530723144199516"
+        iyz="-8.30467178992748E-06"
+        izz="0.0719276378872769" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="left_wheel">
+    <inertial>
+      <origin
+        xyz="6.10622663543836E-16 -0.0326810643555513 1.01307850997046E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.665581459621752" />
+      <inertia
+        ixx="0.000790558223819978"
+        ixy="-7.98741710280396E-18"
+        ixz="8.23005249504451E-09"
+        iyy="0.00122742291312853"
+        iyz="-1.29863935729223E-17"
+        izz="0.00079055834768967" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0 0.147999999999998 0.0264999999999953"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_wheel" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="right_wheel">
+    <inertial>
+      <origin
+        xyz="-6.10622663543836E-16 0.0326810643555514 -1.01307850997046E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.665581459621751" />
+      <inertia
+        ixx="0.000790558223819978"
+        ixy="-8.06595033487221E-18"
+        ixz="-8.2300524953308E-09"
+        iyy="0.00122742291312853"
+        iyz="-1.29989285291796E-17"
+        izz="0.00079055834768967" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0 -0.158000000000001 0.0265000000000054"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_wheel" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="left_front_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.00260496978540975 -0.0230000052826789 0.00449047298458105"
+        rpy="0 0 0" />
+      <mass
+        value="0.101862956416736" />
+      <inertia
+        ixx="4.45159120012986E-05"
+        ixy="2.67809343369774E-13"
+        ixz="8.00070792008144E-06"
+        iyy="4.76642085033965E-05"
+        iyz="9.87148325908721E-12"
+        izz="3.56323315703063E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/left_front_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/left_front_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_front_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="0.200000000000002 0.136000000000001 -0.011000000000005"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_front_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_front_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.00260496978541069 0.0229999947173212 0.00449047298457972"
+        rpy="0 0 0" />
+      <mass
+        value="0.101862956416736" />
+      <inertia
+        ixx="4.45159120012986E-05"
+        ixy="2.67809343390069E-13"
+        ixz="8.00070792008145E-06"
+        iyy="4.76642085033965E-05"
+        iyz="9.87148326320404E-12"
+        izz="3.56323315703063E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/right_front_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/right_front_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_front_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="0.200000000000008 -0.145999999999999 -0.0109999999999967"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_front_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_back_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.00260496978540972 -0.0230000052826789 0.00449047298458106"
+        rpy="0 0 0" />
+      <mass
+        value="0.101862956416736" />
+      <inertia
+        ixx="4.45159120012987E-05"
+        ixy="2.67809344172736E-13"
+        ixz="8.00070792008145E-06"
+        iyy="4.76642085033965E-05"
+        iyz="9.87148325375825E-12"
+        izz="3.56323315703063E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/left_back_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/left_back_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_back_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="-0.159999999999998 0.135999999999993 -0.0109906912310242"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_back_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_back_wheel_link">
+    <inertial>
+      <origin
+        xyz="-0.00271853332667416 0.0229999947823981 0.00442264393896721"
+        rpy="0 0 0" />
+      <mass
+        value="0.10186294764923" />
+      <inertia
+        ixx="4.4102590095551E-05"
+        ixy="-5.72021106673411E-14"
+        ixz="8.21658351259278E-06"
+        iyy="4.76642072466468E-05"
+        iyz="9.8028051701133E-12"
+        izz="3.60456528126852E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/right_back_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/right_back_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_back_wheel_joint"
+    type="fixed">
+    <origin
+      xyz="-0.159999999999992 -0.146000000000006 -0.0109906912310054"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_back_wheel_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="laser">
+    <inertial>
+      <origin
+        xyz="-0.024777095912526 -1.02001740387436E-15 -0.0155722503068122"
+        rpy="0 0 0" />
+      <mass
+        value="0.111368058767952" />
+      <inertia
+        ixx="4.41831113197674E-05"
+        ixy="2.82167341644151E-21"
+        ixz="-8.15748656311962E-21"
+        iyy="4.41217520882522E-05"
+        iyz="-5.3589920011817E-20"
+        izz="4.28225378576191E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/laser.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/laser.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="laser_joint"
+    type="fixed">
+    <origin
+      xyz="0.191027095912531 -0.00499999999999361 0.189499999999999"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="laser" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="anti_fall_link">
+    <inertial>
+      <origin
+        xyz="-0.0034770812621652 1.90819582357449E-17 1.11022302462516E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.000939603781253522" />
+      <inertia
+        ixx="2.80391363262121E-08"
+        ixy="-5.90201646174052E-24"
+        ixz="5.79026428787119E-24"
+        iyy="1.48099046145384E-08"
+        iyz="1.66164012133694E-09"
+        izz="1.79144921286249E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/anti_fall_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/anti_fall_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="anti_fall_joint"
+    type="fixed">
+    <origin
+      xyz="0.206920715709138 -0.00499999999999156 0.211799552681791"
+      rpy="0 0.558599315343565 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="anti_fall_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ir_camera_link">
+    <inertial>
+      <origin
+        xyz="-0.0151676269497037 0.0425764558345857 -0.000105259331368485"
+        rpy="0 0 0" />
+      <mass
+        value="0.157271964402942" />
+      <inertia
+        ixx="0.000342153405219356"
+        ixy="-1.49601115336739E-07"
+        ixz="1.51432943329201E-07"
+        iyy="2.86481269074011E-05"
+        iyz="-8.91286262762428E-10"
+        izz="0.000354610099445598" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ir_camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ir_camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ir_camera_joint"
+    type="fixed">
+    <origin
+      xyz="0.246000000000006 -0.0476020026925012 0.0670882187391721"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="ir_camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="depth_camera_link">
+    <inertial>
+      <origin
+        xyz="-0.0151676269497032 0.0180211424830871 -0.000105259331368485"
+        rpy="0 0 0" />
+      <mass
+        value="0.157271964402942" />
+      <inertia
+        ixx="0.000342153405219356"
+        ixy="-1.49601115336739E-07"
+        ixz="1.51432943329201E-07"
+        iyy="2.86481269074011E-05"
+        iyz="-8.91286262761449E-10"
+        izz="0.000354610099445598" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/depth_camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/depth_camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="depth_camera_joint"
+    type="fixed">
+    <origin
+      xyz="0.246000000000005 -0.0230466893410025 0.0670882187391721"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="depth_camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="rgb_camera_link">
+    <inertial>
+      <origin
+        xyz="-0.0151676269497019 -0.0442655060182752 -0.000105259331366098"
+        rpy="0 0 0" />
+      <mass
+        value="0.157271964402942" />
+      <inertia
+        ixx="0.000342153405219356"
+        ixy="-1.49601115336739E-07"
+        ixz="1.51432943329201E-07"
+        iyy="2.86481269074011E-05"
+        iyz="-8.91286262761307E-10"
+        izz="0.000354610099445598" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/rgb_camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/rgb_camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rgb_camera_joint"
+    type="fixed">
+    <origin
+      xyz="0.246000000000004 0.0392399591603598 0.0670882187391697"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rgb_camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="mag_detect_link">
+    <inertial>
+      <origin
+        xyz="-0.00929638313155506 -2.13370987545147E-16 0.000324686644907701"
+        rpy="0 0 0" />
+      <mass
+        value="0.07256438055098" />
+      <inertia
+        ixx="7.10239827697603E-05"
+        ixy="1.26729349880262E-18"
+        ixz="4.84090759169304E-07"
+        iyy="1.25759594163382E-05"
+        iyz="1.50885770960708E-18"
+        izz="6.25277785034717E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/mag_detect_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/mag_detect_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="mag_detec_joint"
+    type="fixed">
+    <origin
+      xyz="0.245975883658264 -0.00489789082687696 0.000108523412289396"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="mag_detect_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_left_front_link">
+    <inertial>
+      <origin
+        xyz="-0.0112989190262593 -0.0169999999999999 2.4980018054066E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0261063989015341" />
+      <inertia
+        ixx="1.08354685098692E-05"
+        ixy="1.93443399363275E-19"
+        ixz="-3.16361017258954E-22"
+        iyy="2.17250569856562E-06"
+        iyz="1.71558065779632E-19"
+        izz="9.65221477867593E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_left_front_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_left_front_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_left_front_joint"
+    type="fixed">
+    <origin
+      xyz="0.253700000000003 0.124000000000006 0.116999999999996"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_left_front_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_right_front_link">
+    <inertial>
+      <origin
+        xyz="-0.0112989190262601 0.0170000000000001 -3.05311331771918E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0261063989015341" />
+      <inertia
+        ixx="1.08354685098692E-05"
+        ixy="1.93257232581408E-19"
+        ixz="-3.1801016326942E-22"
+        iyy="2.17250569856562E-06"
+        iyz="1.271059727577E-19"
+        izz="9.65221477867594E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_right_front_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_right_front_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_right_front_joint"
+    type="fixed">
+    <origin
+      xyz="0.253700000000008 -0.133999999999994 0.117000000000003"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_right_front_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_left_link">
+    <inertial>
+      <origin
+        xyz="-0.0112989190262597 -0.0169999999999997 -2.4980018054066E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0261063989015341" />
+      <inertia
+        ixx="1.08354685098692E-05"
+        ixy="7.22021821774393E-21"
+        ixz="-1.29111157775447E-22"
+        iyy="2.17250569856562E-06"
+        iyz="-4.74999795143726E-20"
+        izz="9.65221477867593E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_left_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_left_joint"
+    type="fixed">
+    <origin
+      xyz="-0.15 0.179699999999998 0.12199999999999"
+      rpy="0 0 1.57079632679492" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_left_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_right_link">
+    <inertial>
+      <origin
+        xyz="-0.0112989190262597 0.0170000000000003 -3.88578058618805E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0261063989015342" />
+      <inertia
+        ixx="1.08354685098692E-05"
+        ixy="7.26163683317615E-21"
+        ixz="-4.82196173264422E-22"
+        iyy="2.17250569856563E-06"
+        iyz="1.70056787074418E-19"
+        izz="9.65221477867594E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_right_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_right_joint"
+    type="fixed">
+    <origin
+      xyz="-0.149999999999991 -0.189200000000002 0.122000000000005"
+      rpy="0 0 -1.57079632679488" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_right_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_left_back_link">
+    <inertial>
+      <origin
+        xyz="-0.0112989190262597 0.0170000000000003 6.38378239159465E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.0261063989015341" />
+      <inertia
+        ixx="1.08354685098692E-05"
+        ixy="7.36287729437332E-21"
+        ixz="-3.21138996375827E-22"
+        iyy="2.17250569856562E-06"
+        iyz="-2.76934420150774E-19"
+        izz="9.65221477867593E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_left_back_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_left_back_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_left_back_joint"
+    type="fixed">
+    <origin
+      xyz="-0.253699999999998 0.123999999999995 0.116999999999995"
+      rpy="0 0 -3.14159265358977" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_left_back_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_right_back_link">
+    <inertial>
+      <origin
+        xyz="-0.0112989190262597 -0.0169999925335099 -1.59330033624727E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0261063989015341" />
+      <inertia
+        ixx="1.08354685098692E-05"
+        ixy="6.9834903359969E-21"
+        ixz="-3.08485879199684E-22"
+        iyy="2.17251226881963E-06"
+        iyz="-7.01024574005724E-09"
+        izz="9.65220820842193E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_right_back_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://aihitplt_description/meshes/ultrasonic_right_back_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_right_back_joint"
+    type="fixed">
+    <origin
+      xyz="-0.253699999999993 -0.133999985067025 0.117031866006727"
+      rpy="0 0 -3.14159265358977" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_right_back_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  
+  
+  <!-- 机械臂基座与小车基座的连接 -->
+  <joint
+    name="arm_base_to_base_link"
+    type="fixed">
+    <origin
+      xyz="0.0945 -0.005 0.229"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="arm_base" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  
+  <!--arm-->
+<!--arm-->
+  <link name="arm_base">
+    <inertial>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <mass value="1.5"/>
+      <inertia
+        ixx="0.01" ixy="0" ixz="0"
+        iyy="0.01" iyz="0"
+        izz="0.005"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-base.dae"/>
+      </geometry>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-base.dae"/>
+      </geometry>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <link name="link1">
+    <inertial>
+      <origin xyz="0 0 0.06" rpy="0 0 0"/>
+      <mass value="0.8"/>
+      <inertia
+        ixx="0.002" ixy="0" ixz="0"
+        iyy="0.002" iyz="0"
+        izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-1.dae"/>
+      </geometry>
+      <origin xyz="0 0 0.122" rpy="3.1415926 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-1.dae"/>
+      </geometry>
+      <origin xyz="0 0 0.122" rpy="3.1415926 0 0"/>
+    </collision>
+  </link>
+
+  <link name="link2">
+    <inertial>
+      <origin xyz="0 0.056 0" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <!-- 对于长杆状部件，沿长度方向的惯性应该较小 -->
+      <inertia
+        ixx="0.001" ixy="0" ixz="0"
+        iyy="0.003" iyz="0"  
+        izz="0.003"/>
+    </inertial>
+    <visual>
+      <geometry>    
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-2.dae"/>
+      </geometry>
+      <origin xyz="-0.03 0.112 0.0" rpy="1.5708 0 0"/>
+    </visual>
+    <collision>
+      <geometry>    
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-2.dae"/>
+      </geometry>
+      <origin xyz="-0.03 0.112 0.0" rpy="1.5708 0 0"/>
+    </collision>     
+  </link>
+
+  <link name="link3">
+    <inertial>
+      <origin xyz="0 0.115 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <!-- 末端执行器通常质量较大，惯性也较大 -->
+      <inertia
+        ixx="0.02" ixy="0" ixz="0"
+        iyy="0.0015" iyz="0"
+        izz="0.1"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-3.dae"/>
+      </geometry>
+      <origin xyz="-0.03 0.23 0.0" rpy="1.5708 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://aihitplt_arm_description/urdf/aihitArm/aihitArm-3.dae"/>
+      </geometry>
+      <origin xyz="-0.03 0.23 0.0" rpy="1.5708 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="joint1_to_arm_base" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort = "1000.0" lower = "-2.6179" upper = "2.967" velocity = "0"/>
+    <parent link="arm_base"/>
+    <child link="link1"/>
+    <origin xyz= "0 0 0.12" rpy = "3.1415926 0 0"/>  
+  </joint>
+
+  <joint name="joint2_to_joint1" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort = "1000.0" lower = "-0.3490" upper = "1.5708" velocity = "0"/>
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz= "0.03 0 0.01" rpy = " -1.5707963 3.1415926 3.1415926 "/>  
+  </joint>
+
+  <joint name="joint3_to_joint2" type="revolute">
+    <axis xyz=" 0 0 1"/>
+    <limit effort = "1000.0" lower = "-0.0872" upper = "1.9198" velocity = "0"/>
+    <parent link="link2"/>
+    <child link="link3"/>
+    <origin xyz= "0.00 -0.12 0   " rpy = "0 0 0 "/>  
+  </joint>
+  
+</robot>

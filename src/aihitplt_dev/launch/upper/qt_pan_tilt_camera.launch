@@ -1,0 +1,9 @@
+<launch>
+
+    <arg name="gui" default="true" />
+    
+    <node pkg="aihitplt_security" type="aihitplt_pan_tilt_camera.py" name="aihitplt_pan_tilt_camera" output="screen">
+        <param name="gui" value="$(arg gui)" />
+    </node>
+    
+</launch>

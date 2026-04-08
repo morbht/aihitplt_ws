@@ -1,0 +1,6 @@
+<launch>
+	<include file = "$(find aihitplt_multimodal_ai)/launch/multi_ai_deepcam.launch"/>
+	
+	<include file = "$(find aihitplt_multimodal_ai)/launch/base_deepcam.launch"/>
+          
+</launch>

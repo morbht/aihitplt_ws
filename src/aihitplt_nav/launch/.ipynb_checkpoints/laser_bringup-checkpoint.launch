@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find aihitplt_bringup)/launch/bringup.launch"/>
+    <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+    
+</launch>

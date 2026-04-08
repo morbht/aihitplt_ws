@@ -1,0 +1,11 @@
+<launch>
+    <include file="$(find astra_camera)/launch/astrapro.launch"/>
+    <node name="astra_image_flip_py" pkg="aihitplt_visual" type="astra_image_flip.py" output="screen"/>
+    
+    <!-- 启动rqt_image_view用于图像查看和调试 -->
+    <node name="rqt_image_view" pkg="rqt_image_view" type="rqt_image_view" output="screen">
+        <param name="autostart" value="true"/>
+        <!-- 默认显示翻转后的图像话题，可以根据需要修改 -->
+        <param name="topic" value="/camera/rgb/image_flip"/>
+    </node>
+</launch>

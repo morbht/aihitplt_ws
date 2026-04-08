@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg = "aihitplt_hardware_test" 
+  	type = "guide_deli_estop_gui.py" 
+  	name = "guide_deli_estop_gui_node" 
+  	output="screen"/>
+</launch>

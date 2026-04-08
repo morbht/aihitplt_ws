@@ -1,0 +1,7 @@
+<launch>
+    <!-- 启动第一个launch文件 -->
+    <include file="$(find aihitplt_hardware_test)/QT_dev/launch/visual/qt_opencv_apps_deepcam.launch"/>
+    
+    <!-- 启动第二个launch文件 -->
+    <include file="$(find opencv_apps)/launch/hls_color_filter.launch"/>
+</launch>

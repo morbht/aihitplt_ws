@@ -1,0 +1,11 @@
+<launch>
+    
+  <node pkg="aihitplt_bringup" type="aihitplt_range.py" name="aihitplt_range"/>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find aihitplt_bringup)/config/aihitplt.rviz" />
+
+  
+  
+  
+
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="aihitplt_hardware_test" 
+  	type="arm_gui.py" 
+  	name="arm_gui_node" />
+      
+</launch>
