@@ -8,7 +8,7 @@ class Estop:
     def __init__(self):
         rospy.init_node('e_stop_detector', anonymous=True)
         
-        self.emergency_value = 2359296  # 急停对应的值
+        self.emergency_value = 2359296  
         self.e_stop_state = False 
         self.first_message = True 
         

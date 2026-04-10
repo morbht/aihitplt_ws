@@ -39,7 +39,7 @@ class LogiScaleNode:
         # 发布者
         self.weight_pub = rospy.Publisher('/logi_scale/weight', Float32, queue_size=10)
         self.cal_factor_pub = rospy.Publisher('/logi_scale/calibration_factor', Float32, queue_size=10)
-        self.emergency_stop_pub = rospy.Publisher('/logi_scale/emergency_stop', Bool, queue_size=10)
+        self.emergency_stop_pub = rospy.Publisher('/e_stop', Bool, queue_size=10)
         self.device_state_pub = rospy.Publisher('/logi_scale/device_state', Int32, queue_size=10)
 
         if self.publish_raw_data:
@@ -59,7 +59,6 @@ class LogiScaleNode:
         # 定时发布状态
         self.pub_timer = rospy.Timer(rospy.Duration(0.1), self.publish_state)
 
-        rospy.loginfo(f"LogiScale节点已启动，监听话题: {self.cmd_topic}")
 
     def connect_serial(self):
         """连接串口"""

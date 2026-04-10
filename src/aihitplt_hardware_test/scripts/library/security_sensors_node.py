@@ -5,7 +5,7 @@ import struct
 import json
 import yaml
 import os
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 
 FRAME_FORMAT = '<2sI 4H B 5H 2f B'
 FRAME_SIZE = 34
@@ -14,7 +14,7 @@ def security_sensors_node():
     rospy.init_node('security_sensors_node')
     
     # 从YAML文件读取端口号
-    config_path = os.path.join(os.path.dirname(__file__), '../config/security_sensors_port.yaml')
+    config_path = os.path.join(os.path.dirname(__file__), '/home/aihit/aihitplt_ws/src/aihitplt_hardware_test/config/security_sensors_port.yaml')
     try:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
@@ -23,8 +23,12 @@ def security_sensors_node():
         rospy.logerr(f"Failed to read YAML config: {e}")
         port = '/dev/ttyUSB1'
     
-    # 使用String类型发布JSON
+    # 发布器
     pub = rospy.Publisher('/security_sensors', String, queue_size=10)
+    e_stop_pub = rospy.Publisher('/e_stop', Bool, queue_size=10)
+    
+    # 记录上一次急停状态
+    last_e_stop_state = None
     
     try:
         ser = serial.Serial(port, 115200, timeout=0.01)
@@ -49,13 +53,17 @@ def security_sensors_node():
                     checksum = sum(frame[:-1]) & 0xFF
                     
                     if checksum == data[14]:
+                        # 急停状态：True=触发, False=正常
+                        emergency_stop = data[6]
+                        e_stop_active = (emergency_stop == 0)
+                        
                         # 构建字典
                         sensor_dict = {
                             'alcohol': int(data[2]),
                             'smoke': int(data[3]),
                             'light': int(data[4]),
                             'sound': int(data[5]),
-                            'emergency_stop': int(data[6]),
+                            'emergency_stop': int(emergency_stop),
                             'eCO2': int(data[7]),
                             'eCH2O': float(data[8]/100.0),
                             'TVOC': float(data[9]/100.0),
@@ -65,10 +73,16 @@ def security_sensors_node():
                             'humidity': float(data[13])
                         }
                         
-                        # 发布JSON字符串
                         msg = String()
                         msg.data = json.dumps(sensor_dict)
                         pub.publish(msg)
+                        
+                        if last_e_stop_state != e_stop_active:
+                            last_e_stop_state = e_stop_active
+                            e_stop_msg = Bool()
+                            e_stop_msg.data = e_stop_active
+                            e_stop_pub.publish(e_stop_msg)
+                            
                         
                     buffer = buffer[FRAME_SIZE:]
                     

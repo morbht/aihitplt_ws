@@ -5,7 +5,7 @@ from std_msgs.msg import Bool
 
 def aihitplt_guide_delivery_emergency_node():
     """急停按钮ROS节点：读取串口急停状态并发布"""
-    rospy.init_node('aihitplt_guide_delivery_emergency')
+    rospy.init_node('aihitplt_guide_delivery_emergency_node')
 
     port = rospy.get_param('~serial_port', '/dev/ttyUSB2')
     baudrate = rospy.get_param('~baudrate', 115200)
@@ -26,10 +26,8 @@ def aihitplt_guide_delivery_emergency_node():
 
                 if data == "P":  # 急停按下
                     pub.publish(Bool(True))
-                    rospy.logwarn("急停已触发")
                 elif data == "R":  # 急停释放
                     pub.publish(Bool(False))
-                    rospy.loginfo("急停已释放")
 
     except serial.SerialException as e:
         rospy.logerr(f"串口错误: {e}")

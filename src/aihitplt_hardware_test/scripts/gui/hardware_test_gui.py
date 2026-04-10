@@ -631,7 +631,7 @@ class AGVControlGUI:
         
         if button_info['active']:
             # 关闭键盘控制
-            success = self.stop_ros_launch('aihitplt_muti_ai_gui.launch')
+            success = self.stop_ros_launch('aihitplt_multi_ai_gui.launch')
             if success:
                 button_info['button'].config(text="AI套件传感器系统测试", bg='#e0e0e0', fg='black')
                 button_info['active'] = False
@@ -639,7 +639,7 @@ class AGVControlGUI:
         
         else:
             # 启动键盘控制
-            success = self.start_ros_launch('aihitplt_muti_ai_gui.launch', 'AI套件传感器系统测试')
+            success = self.start_ros_launch('aihitplt_multi_ai_gui.launch', 'AI套件传感器系统测试')
             if success:
                 button_info['button'].config(text="关闭AI套件传感器系统测试", bg='#4CAF50', fg='white')
                 button_info['active'] = True

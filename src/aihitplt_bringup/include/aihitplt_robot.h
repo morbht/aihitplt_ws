@@ -1,4 +1,3 @@
-
 #ifndef __AIHITPLT_ROBOT_H_
 #define __AIHITPLT_ROBOT_H_
 
@@ -187,12 +186,23 @@ class turn_on_robot
 		~turn_on_robot(); //Destructor //析构函数
 		void Control();   //Loop control code //循环控制代码
 		serial::Serial Stm32_Serial; //Declare a serial object //声明串口对象 
+		
+		// ========== 急停回调函数声明 ==========
+		void EStopCallback(const std_msgs::Bool::ConstPtr& msg);
+		// ===========================================
+		
 	private:
 		ros::NodeHandle n;           //Create a ROS node handle //创建ROS节点句柄
 		ros::Time _Now, _Last_Time;  //Time dependent, used for integration to find displacement (mileage) //时间相关，用于积分求位移(里程)
 		float Sampling_Time;         //Sampling time, used for integration to find displacement (mileage) //采样时间，用于积分求位移(里程)
 
 		ros::Subscriber Cmd_Vel_Sub,Recharge_Flag_Sub,Red_Vel_Sub,Security_Sub; //Initialize the topic subscriber //初始化话题订阅者
+		
+		// ========== 急停订阅者和标志位 ==========
+		ros::Subscriber e_stop_sub_;  // 急停话题订阅者
+		bool e_stop_active_;          // 急停状态标志位 (true=急停激活, false=正常)
+		// ===========================================
+		
 		//The speed topic subscribes to the callback function
 		//速度话题订阅回调函数
 		void Cmd_Vel_Callback(const geometry_msgs::Twist &twist_aux);              

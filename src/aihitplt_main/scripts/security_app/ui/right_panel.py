@@ -51,6 +51,9 @@ class RightPanel(QFrame):
         self.last_odom_time = 0  
         self.chassis_online = False  
         
+        # 【新增】用于防止重复打印C级警告的状态锁
+        self._last_logged_grade = "A"
+        
         # 急停状态
         self.upper_emergency_stop = False
         self.body_emergency_stop = False
@@ -702,8 +705,6 @@ class RightPanel(QFrame):
     def update_sensor_display(self, sensor_data):
         self.sensor_values = sensor_data
         self.has_sensor_data = True
-        current_time = time.time()
-        last_c_grade_log_time = getattr(self, '_last_c_grade_log_time', 0)
         
         mappings = {'alcohol': ('',''),'smoke': ('',''),'eCO2': ('','ppm'),'eCH2O': ('','mg/m³'),'TVOC': ('','mg/m³'),'PM25': ('','μg/m³'),'PM10': ('','μg/m³'),'temperature': ('','°C'),'humidity': ('','%'),'light': ('',''),'sound': ('','')}
         for key, (_, unit) in mappings.items():
@@ -726,15 +727,32 @@ class RightPanel(QFrame):
         assessment = self.calculate_assessment(sensor_data)
         if 'assessment' in self.sensor_labels:
             grade_thresholds = self.get_grade_threshold()
-            if assessment >= grade_thresholds.get('A', 80): grade = "A"; color = "#4CAF50"
-            elif assessment >= grade_thresholds.get('B', 60): grade = "B"; color = "#ff9800"
+            
+            if assessment >= grade_thresholds.get('A', 80): 
+                grade = "A"
+                color = "#4CAF50"
+            elif assessment >= grade_thresholds.get('B', 60): 
+                grade = "B"
+                color = "#ff9800"
             else:
-                grade = "C"; color = "#f44336"
-                if current_time - last_c_grade_log_time > 1:
+                grade = "C"
+                color = "#f44336"
+                
+            # 【新增】状态锁控制：防止重复打印相同的日志
+            if grade == "C":
+                # 只有上一次不是C级时才打印报警
+                if getattr(self, '_last_logged_grade', 'A') != "C":
                     if hasattr(self.parent, 'left_panel') and hasattr(self.parent.left_panel, 'inspection_table'):
-                        if self.parent.left_panel.inspection_table.is_inspecting:
+                        if getattr(self.parent.left_panel.inspection_table, 'is_inspecting', False):
                             self.log("【警告】环境指数降至C级")
-                            self._last_c_grade_log_time = current_time
+            elif grade in ["A", "B"]:
+                # 从C级恢复时，打印一条恢复日志
+                if getattr(self, '_last_logged_grade', 'A') == "C":
+                    self.log(f"环境指数已恢复至{grade}级")
+            
+            # 更新状态锁
+            self._last_logged_grade = grade
+            
             try:
                 if hasattr(self, 'grade_pub'): self.grade_pub.publish(String(f"{grade},{int(assessment)}"))
             except Exception as e: pass
@@ -772,7 +790,6 @@ class RightPanel(QFrame):
                 inspection_table.pause_inspection()
                 self.log("巡检任务已暂停")
         self.emergency_indicator.setStyleSheet("color: #f44336; font-size: 14px; font-weight: bold;")
-        self.emergency_indicator.setText("⚠")
         
     def on_emergency_cleared(self):
         self.log("环境恢复正常，退出应急模式")

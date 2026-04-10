@@ -50,6 +50,10 @@ add_executable(aihitplt_robot_node src/aihitplt_robot.cpp src/Quaternion_Solutio
 add_dependencies(aihitplt_robot_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(aihitplt_robot_node ${catkin_LIBRARIES})
 
+# add_executable(estop_vel_con src/estop.cpp)
+#add_dependencies(estop_vel_con ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# target_link_libraries(estop_vel_con ${catkin_LIBRARIES})
+
 # add_executable(arm_uplift src/arm_uplift.cpp)
 # target_link_libraries(arm_uplift ${catkin_LIBRARIES})
 

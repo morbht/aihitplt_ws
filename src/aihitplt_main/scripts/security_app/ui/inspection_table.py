@@ -249,7 +249,6 @@ class InspectionTable(QWidget):
             goal.target_pose.pose.position.y = y
             goal.target_pose.pose.position.z = 0.0
             
-            # 核心修改：使用 math 函数把角度转成 Quaternion，发送给底盘
             theta_rad = math.radians(theta)
             goal.target_pose.pose.orientation.x = 0.0
             goal.target_pose.pose.orientation.y = 0.0
@@ -270,30 +269,41 @@ class InspectionTable(QWidget):
             self.navigation_failed_signal.emit(point_name)
     
     def _on_navigation_done(self, point_name, status, result):
+        """导航完成回调（在ROS线程中执行）"""
         self.navigation_in_progress = False
         if status == actionlib.GoalStatus.SUCCEEDED:
             self._log_message(f"到达点位: {point_name}")
-            if self.is_inspecting and not self.is_paused: self.point_reached_signal.emit()
+            if self.is_inspecting and not self.is_paused:
+                # 通过信号触发，信号会在Qt主线程中处理
+                self.point_reached_signal.emit()
         else:
             self._log_message(f"导航到 {point_name} 失败，状态码: {status}")
-            if self.is_inspecting and not self.is_paused: self.navigation_failed_signal.emit(point_name)
+            if self.is_inspecting and not self.is_paused:
+                self.navigation_failed_signal.emit(point_name)
     
     def _on_point_reached(self):
-        if not self.is_inspecting or self.is_paused: return
+        """点位到达处理（在Qt主线程中执行）"""
+        if not self.is_inspecting or self.is_paused: 
+            return
+        
         if 0 <= self.current_running_index < len(self.rows):
             self.rows[self.current_running_index].status_label.setText("完成")
             self.rows[self.current_running_index].status_label.setStyleSheet(self._get_status_style("完成"))
+        
         self.current_running_index += 1
+        
         if self.current_running_index >= len(self.rows):
             if self.loop_enabled:
                 self.current_running_index = 0
                 self._log_message("循环巡检: 开始下一轮")
-                QTimer.singleShot(200, self._run_next_point)
+                # 延迟3秒后开始下一轮
+                QTimer.singleShot(3000, self._run_next_point)
             else:
                 self.stop_inspection()
                 self._log_message("巡检任务完成")
         else:
-            self._run_next_point()
+            # 延迟3秒后前往下一个点
+            QTimer.singleShot(3000, self._run_next_point)
     
     def _on_navigation_failed(self, point_name):
         if self.is_inspecting and not self.is_paused:

@@ -508,13 +508,15 @@ class MapCanvas(QWidget):
         
     def on_points_updated(self):
         parent = self.parent()
-        while parent and not hasattr(parent, 'left_panel'): parent = parent.parent()
+        while parent and not hasattr(parent, 'left_panel'): 
+            parent = parent.parent()
         if parent and hasattr(parent, 'left_panel') and hasattr(parent.left_panel, 'inspection_table'):
             parent.left_panel.inspection_table.set_map_points(self.editor.get_all_points())
         
     def on_point_added(self, point_name, x, y, theta):
         parent = self.parent()
-        while parent and not hasattr(parent, 'left_panel'): parent = parent.parent()  
+        while parent and not hasattr(parent, 'left_panel'): 
+            parent = parent.parent()  
         if parent and hasattr(parent, 'left_panel') and hasattr(parent.left_panel, 'inspection_table'):
             parent.left_panel.inspection_table.set_map_points(self.editor.get_all_points())
     

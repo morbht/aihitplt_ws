@@ -25,7 +25,7 @@ class LogiScaleNode:
         
         self.publish_raw_data = rospy.get_param('~publish_raw_data', False)  # 默认不发布
         
-        # 1. 参数配置：先从YAML配置文件加载，如果没有则使用ROS参数或默认值
+        # 参数配置：先从YAML配置文件加载，如果没有则使用ROS参数或默认值
         self.port, self.baudrate = self._load_config_from_yaml()
         
         # 如果配置文件没有找到或参数不完整，使用ROS参数或默认值
@@ -39,33 +39,33 @@ class LogiScaleNode:
         
         rospy.loginfo(f"使用串口: {self.port} @ {self.baudrate}")
         
-        # 2. 串口初始化
+        # 串口初始化
         self.ser = None
         self.is_connected = False
         self.serial_lock = threading.Lock()  # 串口操作互斥锁
         self.scale_data = ScaleData()
         
-        # 3. ROS发布者（发布传感器状态）
+        # ROS发布者（发布传感器状态）
         self.weight_pub = rospy.Publisher('/logi_scale/weight', Float32, queue_size=10)
         self.cal_factor_pub = rospy.Publisher('/logi_scale/calibration_factor', Float32, queue_size=10)
-        self.emergency_stop_pub = rospy.Publisher('/logi_scale/emergency_stop', Bool, queue_size=10)
+        self.emergency_stop_pub = rospy.Publisher('/e_stop', Bool, queue_size=10)
         self.device_state_pub = rospy.Publisher('/logi_scale/device_state', Int32, queue_size=10)
         
         self.raw_data_pub = None
         if self.publish_raw_data:
             self.raw_data_pub = rospy.Publisher('/logi_scale/raw_data', String, queue_size=10)
         
-        # 4. ROS订阅者（接收控制指令）
+        # ROS订阅者（接收控制指令）
         self.cmd_sub = rospy.Subscriber(self.cmd_topic, String, self.cmd_callback, queue_size=10)
         
-        # 5. 串口连接线程
+        # 串口连接线程
         self.stop_thread = False
         self.serial_thread = threading.Thread(target=self.serial_listener)
         self.serial_thread.daemon = True
         self.connect_serial()
         self.serial_thread.start()
         
-        # 6. 状态发布定时器（10Hz）
+        # 状态发布定时器（10Hz）
         self.pub_timer = rospy.Timer(rospy.Duration(0.1), self.publish_state)
         
         rospy.loginfo("LogiScale node initialized. Listening on topic: %s", self.cmd_topic)

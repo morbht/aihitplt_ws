@@ -100,6 +100,9 @@ class RobotInterface(QMainWindow):
             inspection_table.inspection_resumed.connect(self.on_inspection_resumed)
             inspection_table.point_selected.connect(self.on_point_selected_from_table)
             inspection_table.navigation_started.connect(self.on_navigation_started)
+            
+            if hasattr(self.right_panel, 'emergency_handler'):
+                inspection_table.point_reached_signal.connect(self.right_panel.emergency_handler.on_navigation_complete)
         
         if hasattr(self.right_panel, 'emergency_handler'):
             self.right_panel.emergency_handler.emergency_cleared.connect(self.on_emergency_cleared)

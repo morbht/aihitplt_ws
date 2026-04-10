@@ -34,7 +34,6 @@
     <remap if="$(arg Ultrasonic_Avoid)" from="cmd_vel" to="change_cmd_vel"/>
     <!-- 如果开启了平滑功能，则订阅平滑速度 -->
     <remap if="$(arg smoother)" from="cmd_vel" to="smoother_cmd_vel"/>
-
   </node>
 
   <!-- 如果开启了速度平滑功能，则运行速度平滑功能包 -->
@@ -54,6 +53,7 @@
   </node>
 
   <include file="$(find aihitplt_bringup)/launch/include/aihitplt_model_visualization.launch" />
+  
   <!-- 关闭底盘自主安全防护 -->
   <!-- <node pkg="aihitplt_bringup" type="security_pub.py" output="screen" name="security_node"/> -->
   <include file="$(find aihitplt_bringup)/launch/include/robot_pose_ekf.launch" >
@@ -67,13 +67,14 @@
     <param name="publish_frequency" type="double" value="50.0" />
     <remap from="joint_states" to="/joint_states" />
   </node>
+  
   <node pkg="aihitplt_bringup" type="aihitplt_joint_publisher.py" name="aihit_joint_state_publisher" />
   <!-- node pkg="tf" type="static_transform_publisher" name="base_to_left_wheel"
   	args="0 0.158 0.0285 0 0.0 0.0 base_link left_wheel 50" />
-     
+  
   <node pkg="tf" type="static_transform_publisher" name="base_to_right_wheel"
   	args="0 -0.158 0.0285 0 0.0 0.0 base_link right_wheel 50" /-->
-  	
+  
   <!-- 以下为节点启动部分 -->
     
   <!-- 圆形屏节点 -->
@@ -83,7 +84,7 @@
   <node if="$(arg activate_pan_tilt_sensor)" pkg="aihitplt_multimodal_ai" type="aihitplt_pan_tilt_sensor.py" name="aihitplt_pan_tilt_sensor_node" />
   
   <!-- 急停节点 -->
-  <node pkg="aihitplt_bringup" type="e-stop.py" name="e_sotp_node" />
+  <node pkg="aihitplt_bringup" type="e_stop.py" name="e_sotp_node" />
   
   <!-- RGB灯带节点 -->
   <node pkg="aihitplt_bringup" type="rgb_node.py" name="rgb_node" />

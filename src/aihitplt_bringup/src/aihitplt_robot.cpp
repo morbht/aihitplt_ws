@@ -1,11 +1,13 @@
 #include "aihitplt_robot.h" 
 #include "Quaternion_Solution.h"
+#include "std_msgs/Bool.h"  // 添加急停消息头文件
 
 sensor_msgs::Imu Mpu6050;//Instantiate an IMU object //实例化IMU对象 
 bool distance_flag=false;
 bool check_AutoCharge_data = false;
 uint32_t temp_selfcheck;
 bool SecurityPLY = 0;
+
 /**************************************
 Date: January 28, 2021
 Function: The main function, ROS initialization, creates the Robot_control object through the Turn_on_robot class and automatically calls the constructor initialization
@@ -82,6 +84,14 @@ Function: The speed topic subscription Callback function, according to the subsc
 ***************************************/
 void turn_on_robot::Cmd_Vel_Callback(const geometry_msgs::Twist &twist_aux)
 {
+  if (e_stop_active_) {
+    static ros::Time last_warn_time = ros::Time::now();
+    if ((ros::Time::now() - last_warn_time).toSec() > 2.0) {
+      last_warn_time = ros::Time::now();
+    }
+    return;  //直接返回，不向下位机发送速度
+  }
+
   short  transition;  //intermediate variable //中间变量
 
   Send_Data.tx[0]=FRAME_HEADER; //frame head 0x7B //帧头0X7B 
@@ -120,6 +130,7 @@ void turn_on_robot::Cmd_Vel_Callback(const geometry_msgs::Twist &twist_aux)
     ROS_ERROR_STREAM("Unable to send data through serial port"); //If sending data fails, an error message is printed //如果发送数据失败，打印错误信息
   }
 }
+
 /**************************************
 Date: March 1, 2022
 Function: Infrared connection speed topic subscription Callback function, according to the subscription command through the serial port to set the infrared connection speed
@@ -127,6 +138,11 @@ Function: Infrared connection speed topic subscription Callback function, accord
 ***************************************/
 void turn_on_robot::Red_Vel_Callback(const geometry_msgs::Twist &twist_aux)
 {
+  // 急停激活时也忽略红外对接速度
+  if (e_stop_active_) {
+    return;
+  }
+
   short  transition;  //intermediate variable //中间变量
 
   Send_Data.tx[0]=FRAME_HEADER; //frame head 0x7B //帧头0X7B
@@ -182,6 +198,36 @@ void turn_on_robot::Security_Callback(const std_msgs::Int8 &Security_Flag)
 {
   SecurityPLY = Security_Flag.data;
 }
+
+// ========== 新增：急停状态回调函数 ==========
+void turn_on_robot::EStopCallback(const std_msgs::Bool::ConstPtr& msg)
+{
+  e_stop_active_ = msg->data;
+  if (e_stop_active_) 
+  {
+    ROS_WARN(" EMERGENCY STOP ACTIVATED! ");
+    
+    // 急停激活时，立即向下位机发送一次零速度指令，确保机器人马上停止
+    Send_Data.tx[0] = FRAME_HEADER;
+    Send_Data.tx[1] = AutoRecharge;
+    Send_Data.tx[2] = SecurityPLY;
+    Send_Data.tx[3] = 0;  // X速度高8位
+    Send_Data.tx[4] = 0;  // X速度低8位
+    Send_Data.tx[5] = 0;  // Y速度高8位
+    Send_Data.tx[6] = 0;  // Y速度低8位
+    Send_Data.tx[7] = 0;  // Z角速度高8位
+    Send_Data.tx[8] = 0;  // Z角速度低8位
+    Send_Data.tx[9] = Check_Sum(9, SEND_DATA_CHECK);
+    Send_Data.tx[10] = FRAME_TAIL;
+    try {
+      Stm32_Serial.write(Send_Data.tx, sizeof(Send_Data.tx));
+      ROS_INFO("[E-STOP] Zero velocity command sent to motor driver.");
+    } catch (serial::IOException& e) {
+      ROS_ERROR("[E-STOP] Failed to send stop command!");
+    }
+  } 
+}
+// =========================================
 
 /**************************************
 Date: January 28, 2021
@@ -325,8 +371,6 @@ void turn_on_robot::Publish_distance()
   aihitplt_bringup::Supersonic distance_msg;
   distance_msg.header.stamp=ros::Time::now();
 
-  //mini没有超声波F
-  // if(car_mode=="S300_Mini" || car_mode=="S300_Mini_without_lebai") distance.F = 0;
 
   if(distance.A>=0||distance.A<=6) distance_msg.distanceA = distance.A;
   if(distance.B>=0||distance.B<=6) distance_msg.distanceB = distance.B;
@@ -805,6 +849,10 @@ turn_on_robot::turn_on_robot():Sampling_Time(0),Power_voltage(0)
   private_nh.param<float>("odom_z_scale_positive",odom_z_scale_positive,1.0);
   private_nh.param<float>("odom_z_scale_negative",odom_z_scale_negative,1.0);
 
+  // ========== 新增：初始化急停标志位 ==========
+  e_stop_active_ = false;
+  // =========================================
+
   voltage_publisher = n.advertise<std_msgs::Float32>("PowerVoltage", 10); //Create a battery-voltage topic publisher //创建电池电压话题发布者
   odom_publisher    = n.advertise<nav_msgs::Odometry>("odom", 50); //Create the odometer topic publisher //创建里程计话题发布者
   imu_publisher     = n.advertise<sensor_msgs::Imu>("imu", 20); //Create an IMU topic publisher //创建IMU话题发布者
@@ -831,6 +879,11 @@ turn_on_robot::turn_on_robot():Sampling_Time(0),Power_voltage(0)
 
   //底盘安全防护关闭话题订阅
   Security_Sub = n.subscribe("chassis_security",100, &turn_on_robot::Security_Callback, this); 
+
+  // ========== 新增：订阅急停话题 ==========
+  e_stop_sub_ = n.subscribe("/e_stop", 1, &turn_on_robot::EStopCallback, this);
+  ROS_INFO("[E-STOP] Emergency stop subscriber initialized. Waiting for /e_stop messages...");
+  // =======================================
   
   ROS_INFO_STREAM("Data ready"); //Prompt message //提示信息 
   

@@ -6,6 +6,7 @@
 import rospy
 import os
 import subprocess
+import time  
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import QObject, pyqtSignal, QTimer
 from std_msgs.msg import String, Bool
@@ -35,10 +36,12 @@ class EmergencyHandler(QObject):
         self.current_score = 100
         self.grade_history = []
         self.history_maxlen = 3
-        self.trigger_count = 0
-        self.recovery_count = 0
-        self.trigger_threshold = 3
-        self.recovery_threshold = 3
+        
+        # 物理时间防抖滞回
+        self.c_grade_start_time = 0
+        self.safe_grade_start_time = 0
+        self.trigger_duration = 3.0   
+        self.recovery_duration = 5.0  
         
         # 语音播报
         self.voice_playing = False
@@ -60,7 +63,11 @@ class EmergencyHandler(QObject):
         self.alert_max_count = 3
         self.pending_continue = False
         self.current_point_alert_triggered = False
+        
+        # 免疫与屏蔽状态控制
         self.navigation_in_progress_after_alert = False
+        self.ignore_environment_until_new_task = False  # 【新增】：彻底屏蔽环境报警的锁
+        self._stop_cmd_count = 0 
         
         # 恢复信息
         self._pending_resume = None
@@ -181,10 +188,14 @@ class EmergencyHandler(QObject):
             self.navigation_in_progress_after_alert = True
             self._exit_emergency_mode_immediately()
         else:
-            rospy.loginfo("停止巡检")
+            rospy.loginfo("停止巡检并开启环境报警屏蔽锁")
             if hasattr(self.parent, 'log'):
-                self.parent.log("停止巡检任务")
+                self.parent.log("已停止巡检任务，系统将无视环境警报直到下次任务开启")
             self.pending_continue = False
+            
+            # 【核心修改点】：给系统上屏蔽锁，防止环境一直是C级导致的反复触发
+            self.ignore_environment_until_new_task = True
+            
             try:
                 inspection_table = self.parent.parent.left_panel.inspection_table
                 if inspection_table.is_inspecting:
@@ -197,6 +208,7 @@ class EmergencyHandler(QObject):
         """立即退出应急模式"""
         rospy.loginfo("========== 立即退出应急模式，恢复巡检 ==========")
         
+        self.emergency_mode = False  
         self.is_scanning = False
         self.scan_started = False
         self._send_preset_command(40)
@@ -215,15 +227,48 @@ class EmergencyHandler(QObject):
         except:
             pass
         
-        # 通过信号关闭云台
-        if hasattr(self.parent, 'pan_tilt_enabled') and self.parent.pan_tilt_enabled:
-            self.request_close_pan_tilt.emit()
-            QTimer.singleShot(2500, self._complete_exit_with_resume)
-        else:
-            self._complete_exit_with_resume()
+        # 立即关闭云台
+        self._force_close_pan_tilt_directly()
         
         self.stop_voice()
         self.emergency_cleared.emit()
+    
+    def _force_close_pan_tilt_directly(self):
+        """直接强制关闭云台进程"""
+        rospy.loginfo("应急模式结束，强制关闭云台进程")
+        try:
+            self._send_preset_command(40)
+            QTimer.singleShot(500, self._execute_kill_processes)
+        except Exception as e:
+            rospy.logerr(f"强制关闭云台指令下发失败: {e}")
+            self._execute_kill_processes()
+            
+    def _execute_kill_processes(self):
+        """执行实际的进程终结操作"""
+        try:
+            import subprocess
+            subprocess.run(['pkill', '-f', 'pan_tilt'], stderr=subprocess.DEVNULL)
+            subprocess.run(['pkill', '-f', 'pan_cam'], stderr=subprocess.DEVNULL)
+            subprocess.run(['pkill', '-f', 'aihitplt_yolo'], stderr=subprocess.DEVNULL)
+            rospy.loginfo("已发送终止信号给云台相关进程")
+            
+            if self.parent and hasattr(self.parent, 'pan_tilt_enabled'):
+                self.parent.pan_tilt_enabled = False
+                if hasattr(self.parent, 'update_pan_tilt_display'):
+                    self.parent.update_pan_tilt_display("休眠")
+                if hasattr(self.parent, 'update_pan_tilt_button_style'):
+                    self.parent.update_pan_tilt_button_style()
+                if hasattr(self.parent, 'preset_sent'):
+                    self.parent.preset_sent = False
+                if hasattr(self.parent, 'pan_tilt_online'):
+                    self.parent.pan_tilt_online = False
+                if hasattr(self.parent, 'pan_tilt_process'):
+                    self.parent.pan_tilt_process = None
+                rospy.loginfo("云台状态已更新为休眠")
+        except Exception as e:
+            rospy.logerr(f"强制关闭进程执行失败: {e}")
+            
+        self._complete_exit_with_resume()
     
     def _handle_close_pan_tilt(self):
         """处理关闭云台请求"""
@@ -237,7 +282,6 @@ class EmergencyHandler(QObject):
         """完成退出并恢复巡检"""
         self.emergency_pub.publish(Bool(False))
         
-        # 恢复巡检
         if self._pending_resume:
             try:
                 inspection_table = self.parent.parent.left_panel.inspection_table
@@ -249,53 +293,95 @@ class EmergencyHandler(QObject):
                 QTimer.singleShot(500, inspection_table.resume_inspection)
             except:
                 pass
+            self._pending_resume = None  
         
         if hasattr(self.parent, 'log'):
             try:
-                self.parent.log("应急模式已解除，云台已关闭，继续巡检任务")
+                self.parent.log("应急模式已解除，前往下一个点位前将屏蔽环境报警")
             except RuntimeError:
                 pass
+                
+    def on_navigation_complete(self):
+        """导航完成回调：到达下一个点位后解除免疫"""
+        if self.navigation_in_progress_after_alert:
+            self.navigation_in_progress_after_alert = False
+            rospy.loginfo("已到达下一个巡检点，恢复环境等级检测")
+            if hasattr(self.parent, 'log'):
+                self.parent.log("已到达新点位，重新开启环境异常检测")
     
     def update_grade_history(self, grade):
-        """更新等级历史"""
+        """更新等级历史：使用真实时间双向防抖机制"""
         self.grade_history.append(grade)
         if len(self.grade_history) > self.history_maxlen:
             self.grade_history.pop(0)
         
         is_c_grade = (grade == "C")
+        current_time = time.time()
         
+        # 【核心修改点】：在后台静默检查巡检是否已重新开启，如果是，则自动砸碎“屏蔽锁”
+        try:
+            inspection_table = self.parent.parent.left_panel.inspection_table
+            if getattr(inspection_table, 'is_inspecting', False):
+                if self.ignore_environment_until_new_task:
+                    self.ignore_environment_until_new_task = False
+                    rospy.loginfo("检测到新一轮巡检开启，自动解除环境报警屏蔽锁")
+                    if hasattr(self.parent, 'log'):
+                        self.parent.log("新任务启动，环境监测保护机制已重新激活")
+        except:
+            pass
+            
+        # 如果屏蔽锁生效中，直接无视并清零计时器
+        if self.ignore_environment_until_new_task:
+            self.c_grade_start_time = 0
+            self.safe_grade_start_time = 0
+            return
+        
+        # 如果还在去下一个点的免疫期内，直接无视并清零计时器
         if self.navigation_in_progress_after_alert:
+            self.c_grade_start_time = 0
+            self.safe_grade_start_time = 0
             return
         
         if not self.emergency_mode:
+            # ==== 触发逻辑 ====
             if is_c_grade:
-                self.trigger_count += 1
+                # 记录首次变为C级的时间
+                if self.c_grade_start_time == 0:
+                    self.c_grade_start_time = current_time
+                # 如果连续保持C级超过设定的触发时间 (3秒)
+                elif current_time - self.c_grade_start_time >= self.trigger_duration:
+                    self.c_grade_start_time = 0  # 消耗掉这次触发
+                    QTimer.singleShot(0, self.enter_emergency_mode)
             else:
-                self.trigger_count = 0
-            if self.trigger_count >= self.trigger_threshold:
-                QTimer.singleShot(0, self.enter_emergency_mode)
+                # 只要中间跳出过C级，计时器立刻被无情打断清零
+                self.c_grade_start_time = 0
         else:
-            if not self.is_scanning and not self.pending_continue:
+            # ==== 恢复逻辑 ====
+            if not self.pending_continue and not self.current_point_alert_triggered:
                 if not is_c_grade:
-                    self.recovery_count += 1
+                    # 记录首次脱离C级的时间
+                    if self.safe_grade_start_time == 0:
+                        self.safe_grade_start_time = current_time
+                    # 必须连续稳定在A或B级超过设定的恢复时间 (5秒)
+                    elif current_time - self.safe_grade_start_time >= self.recovery_duration:
+                        self.safe_grade_start_time = 0  # 消耗掉这次触发
+                        QTimer.singleShot(0, self.exit_emergency_mode)
                 else:
-                    self.recovery_count = 0
-                if self.recovery_count >= self.recovery_threshold:
-                    QTimer.singleShot(0, self.exit_emergency_mode)
-    
-    def on_navigation_complete(self):
-        """导航完成回调"""
-        self.navigation_in_progress_after_alert = False
+                    # 如果在恢复读条时又吸了一口烟(变成C级)，恢复条全部清零重来
+                    self.safe_grade_start_time = 0
     
     def enter_emergency_mode(self):
         """进入应急模式"""
-        if self.emergency_mode or self.navigation_in_progress_after_alert:
+        if self.emergency_mode or self.navigation_in_progress_after_alert or self.ignore_environment_until_new_task:
             return
         
         rospy.logwarn(f"环境异常！进入应急模式 (等级: {self.current_grade}级)")
         self.emergency_mode = True
-        self.trigger_count = 0
-        self.recovery_count = 0
+        
+        # 确保进入模式时重置所有时间锁
+        self.c_grade_start_time = 0
+        self.safe_grade_start_time = 0
+        
         self.scan_started = False
         self.detection_history = []
         self.pending_continue = False
@@ -378,45 +464,58 @@ class EmergencyHandler(QObject):
         QTimer.singleShot(3000, self._start_point_detection)
     
     def _on_scan_complete(self):
-        """巡查完成"""
-        rospy.loginfo("应急巡查完成")
-        self.is_scanning = False
-        self.scan_started = False
+        """巡查完成：基于无限循环检测策略"""
+        rospy.loginfo("一轮应急巡查完成")
         self.current_point_alert_triggered = False
-        self._send_preset_command(40)
         
-        if self.current_grade != "C":
-            rospy.loginfo("环境已恢复正常，退出应急模式")
-            QTimer.singleShot(1000, self.exit_emergency_mode)
+        if self.emergency_mode:
+            rospy.logwarn("环境仍处于报警状态，开始新一轮云台巡查...")
+            self.current_point_index = -1
+            QTimer.singleShot(2000, self._move_to_next_point)
     
     def exit_emergency_mode(self):
         """退出应急模式"""
         if not self.emergency_mode:
             return
         
-        rospy.loginfo("========== 退出应急模式 ==========")
+        rospy.loginfo("========== 彻底退出应急模式 ==========")
         
         self.emergency_mode = False
         self.is_scanning = False
         self.scan_started = False
-        self.recovery_count = 0
+        
+        # 确保退出时重置所有时间锁
+        self.c_grade_start_time = 0
+        self.safe_grade_start_time = 0
+        
         self.current_point_index = -1
         self.detection_history = []
         self.pending_continue = False
         self.current_point_alert_triggered = False
         
+        self.navigation_in_progress_after_alert = False 
+        
         self._send_preset_command(40)
         self.emergency_pub.publish(Bool(False))
         self.stop_voice()
+        
+        self._force_close_pan_tilt_directly()
+        
         self.emergency_cleared.emit()
     
     def stop_robot(self):
-        """停止机器人"""
+        """停止机器人 (异步防卡死版)"""
+        self._stop_cmd_count = 0
+        self._send_stop_cmd()
+        
+    def _send_stop_cmd(self):
+        """链式发送停止指令"""
         try:
             twist = Twist()
-            for _ in range(3):
-                self.cmd_vel_pub.publish(twist)
-                rospy.sleep(0.1)
+            self.cmd_vel_pub.publish(twist)
+            self._stop_cmd_count += 1
+            if self._stop_cmd_count < 3:
+                QTimer.singleShot(100, self._send_stop_cmd)
         except Exception as e:
             rospy.logerr(f"停止机器人失败: {e}")
     
@@ -470,4 +569,4 @@ class EmergencyHandler(QObject):
         """关闭处理器"""
         self.stop_voice()
         if self.emergency_mode:
-            QTimer.singleShot(0, self.exit_emergency_mode)
+            self.exit_emergency_mode()

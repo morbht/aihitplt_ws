@@ -97,7 +97,7 @@ class DeliveryModuleNode:
         
         # 系统状态话题
         self.sys_state_pub = rospy.Publisher('delivery_system_state', Int32, queue_size=10)
-        self.emergency_pub = rospy.Publisher('emergency_stop', Bool, queue_size=10)
+        self.emergency_pub = rospy.Publisher('e_stop', Bool, queue_size=10)
         
         rospy.loginfo("话题发布器初始化完成")
     

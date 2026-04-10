@@ -3,7 +3,7 @@
 		<param name = "port" value = "/dev/ttyUSB2"/>
 	</node>
 	
+	<!-- <include file="$(find aihitplt_bringup)/launch/aihitplt_bringup.launch"/>-->
+	
 	<node pkg = "aihitplt_main" type = "security_main.py" name = "security_main_node"/>
-
-
 </launch>
